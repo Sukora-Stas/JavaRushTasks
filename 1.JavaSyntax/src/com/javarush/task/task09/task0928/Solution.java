@@ -13,12 +13,11 @@ public class Solution {
         String sourceFileName = reader.readLine();
         String destinationFileName = reader.readLine();
 
-        InputStream fileInputStream = getOutputStream(destinationFileName);
-        InputStream fileOutputStream = getOutputStream(destinationFileName);
+        InputStream fileInputStream = getInputStream(sourceFileName);
+        OutputStream fileOutputStream = getOutputStream(destinationFileName);
 
         int count = 0;
-        while (fileInputStream.available() > 0) ;
-        {
+        while (fileInputStream.available() > 0) {
             int data = fileInputStream.read();
             fileOutputStream.write(data);
             count++;
