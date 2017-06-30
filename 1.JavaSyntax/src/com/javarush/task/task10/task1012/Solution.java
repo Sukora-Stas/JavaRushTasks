@@ -3,6 +3,7 @@ package com.javarush.task.task10.task1012;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /* 
 Количество букв
@@ -12,24 +13,25 @@ public class Solution {
     public static void main(String[] args) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        // алфавит
         String abc = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
         char[] abcArray = abc.toCharArray();
-
-        ArrayList<Character> alphabet = new ArrayList<Character>();
+        HashMap<Character,Integer> hashMap = new HashMap<>();
         for (int i = 0; i < abcArray.length; i++) {
-            alphabet.add(abcArray[i]);
+            hashMap.put(abcArray[i], 0);
         }
 
-        // ввод строк
-        ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < 10; i++) {
             String s = reader.readLine();
-            list.add(s.toLowerCase());
+            char[] chars = s.toLowerCase().toCharArray();
+            for (int j = 0; j < chars.length; j++) {
+                if (hashMap.containsKey(chars[j]))
+                    hashMap.put(chars[j], hashMap.get(chars[j]) + 1);
+            }
         }
 
+        for (int i = 0; i < abcArray.length; i++) {
+            System.out.println(abcArray[i] + " " + hashMap.get(abcArray[i]));
+        }
 
-        // напишите тут ваш код
     }
-
 }
