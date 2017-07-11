@@ -10,31 +10,24 @@ public class Solution {
         hen.getCountOfEggsPerMonth();
     }
 
-    static class HenFactory {
+    static class HenFactory implements Country {
 
         static Hen getHen(String country) {
             Hen hen = null;
             //напишите тут ваш код
+            if (country.equals(BELARUS)) {
+                hen = new BelarusianHen();
+//                System.out.println(hen.getDescription());
+            } else if (country.equals(UKRAINE)) {
+                hen = new UkrainianHen();
+            } else if (country.equals(RUSSIA)) {
+                hen = new RussianHen();
+            } else if (country.equals(MOLDOVA)) {
+                hen = new MoldovanHen();
+            }
             return hen;
         }
     }
 
-    abstract class Hen {
-        public abstract int getCountOfEggsPerMonth();
-
-        String getDescription() {
-            return "Я - курица";
-        }
-    }
-
-    class RussianHen extends Hen{
-
-        @Override
-        public int getCountOfEggsPerMonth() {
-            return 0;
-        }
-    }
-
-    class Ukrainian extends Hen
 
 }
