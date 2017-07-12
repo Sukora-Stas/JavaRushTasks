@@ -26,6 +26,7 @@ public class Solution {
             doWork(person); //вызываем doWork
         }
     }
+
 //    public static void doWork(Person person) {
 //        if (person instanceof Person.User) ((Person.User) person).live();
 //        else if (person instanceof Person.Loser) ((Person.Loser) person).doNothing();
