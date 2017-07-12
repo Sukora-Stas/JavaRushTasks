@@ -19,5 +19,4 @@ public class Solution {
         return item.getName() != null && item.getName().length() > 4;
     }
 
-
 }
