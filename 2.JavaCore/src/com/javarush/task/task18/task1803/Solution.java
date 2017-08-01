@@ -36,6 +36,7 @@ public class Solution {
         //1. Ввести с консоли имя файла.
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         FileInputStream fileInputStream = new FileInputStream(reader.readLine());
+
         //2. Найти байт или байты с максимальным количеством повторов.
         ArrayList<Byte> byteList = new ArrayList<>();
         while (fileInputStream.available() > 0) {
@@ -55,6 +56,7 @@ public class Solution {
             indexList.add(l);
             l = 0;
         }
+
         //узнаем самое большое количество совпадений
         ArrayList<Long> indexSort = new ArrayList<>(indexList);//массив для сортировки
         Collections.sort(indexSort);                           //сортируем по возрастанию
@@ -68,10 +70,12 @@ public class Solution {
                 }
             }
         }
+
         //3. Вывести их на экран через пробел.
         for (int j = 0; j < finalBytes.size(); j++) {
             System.out.print(finalBytes.get(j) + " ");
         }
+
         //4. Закрыть поток ввода-вывода.
         fileInputStream.close();
 
