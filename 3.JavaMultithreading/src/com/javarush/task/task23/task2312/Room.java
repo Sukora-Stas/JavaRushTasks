@@ -23,6 +23,16 @@ public class Room {
         this.snake = snake;
     }
 
+    public void createMouse() {
+        int x = (int) (Math.random() * width);
+        int y = (int) (Math.random() * height);
+        mouse = new Mouse(x, y);
+    }
+
+    public void eatMouse() {
+        createMouse();
+    }
+
     public void run() {
 
     }
