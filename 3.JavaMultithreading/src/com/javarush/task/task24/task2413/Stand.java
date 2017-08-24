@@ -13,6 +13,31 @@ public class Stand extends BaseObject {
         direction = 0;
     }
 
+    @Override
+    public void draw(Canvas canvas) {
+
+    }
+
+    @Override
+    public void move() {
+        double dx = speed * direction;
+        x = x + dx;
+    }
+
+    /**
+     * direction устанавливается равным -1
+     */
+    public void moveLeft() {
+        direction = -1;
+    }
+
+    /**
+     * direction устанавливается равным +1
+     */
+    public void moveRight() {
+        direction = 1;
+    }
+
     public double getSpeed() {
         return speed;
     }
@@ -33,13 +58,5 @@ public class Stand extends BaseObject {
         super(x, y, radius);
     }
 
-    @Override
-    public void draw(Canvas canvas) {
 
-    }
-
-    @Override
-    public void move() {
-
-    }
 }
