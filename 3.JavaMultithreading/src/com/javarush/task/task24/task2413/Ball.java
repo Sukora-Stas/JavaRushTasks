@@ -14,7 +14,7 @@ public class Ball extends BaseObject {
         super(x, y, radius);
     }
 
-    public Ball(double x, double y,  double speed, double direction) {
+    public Ball(double x, double y, double speed, double direction) {
         super(x, y, 1);
 
         this.speed = speed;
@@ -23,13 +23,21 @@ public class Ball extends BaseObject {
         isFrozen = true;
     }
 
+    public void start() {
+        isFrozen = false;
+    }
+
     @Override
     public void draw(Canvas canvas) {
-
+        canvas.setPoint(x, y, 'O');
     }
 
     @Override
     public void move() {
+        if (isFrozen) return;
+
+        x += dx;
+        y += dy;
 
     }
 

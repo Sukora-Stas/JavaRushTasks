@@ -4,9 +4,9 @@ package com.javarush.task.task24.task2413;
  * Created by Sukora Stas.
  */
 public abstract class BaseObject {
-    private double x;
-    private double y;
-    private double radius;
+    protected double x;
+    protected double y;
+    protected double radius;
 
     public BaseObject(double x, double y, double radius) {
         this.x = x;
@@ -14,7 +14,7 @@ public abstract class BaseObject {
         this.radius = radius;
     }
 
-    public boolean isIntersec(BaseObject o){
+    public boolean isIntersec(BaseObject o) {
         double dx = x - o.x;
         double dy = y - o.y;
         double destination = Math.sqrt(dx * dx + dy * dy);
