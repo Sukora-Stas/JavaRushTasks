@@ -12,6 +12,7 @@ public class Arkanoid {
     private Ball ball;
     private Stand stand;
     private List<Brick> bricks;
+private boolean isGameOver;
 
     static Arkanoid game;
 
@@ -66,6 +67,44 @@ public class Arkanoid {
             canvas.setPoint(0, i, '|');
             canvas.setPoint(width + 1, i, '|');
         }
+    }
+
+    /**
+     * Проверяем столкновение с кирпичами.
+     * Если столкновение было - шарик отлетает в случайном направлении 0..360 градусов
+     */
+    public void checkBricksBump()
+    {
+        for (Brick currentBrick : bricks) {
+            if (ball.isIntersec(currentBrick)) {
+                double angel = Math.random() * 360;
+                ball.setDirection(angel);
+                bricks.remove(currentBrick);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Проверяем столкновение с подставкой.
+     * Если столкновение было - шарик отлетает в случайном направлении  вверх 80..100 градусов.
+     */
+    public void checkStandBump()
+    {
+        if (ball.isIntersec(stand)) {
+            double angel = 80 + Math.random()*20;
+            ball.setDirection(angel);
+        }
+    }
+
+    /**
+     * Проверяем - не улетел ли шарик через дно.
+     * Если да - игра окончена (isGameOver = true)
+     */
+    public void checkEndGame()
+    {
+        if (ball.getY() >= height)
+            isGameOver = true;
     }
 
 
