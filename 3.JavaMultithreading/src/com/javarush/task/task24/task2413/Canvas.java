@@ -27,14 +27,34 @@ public class Canvas {
         int height = matrix.length;
         int width = matrix[0].length;
 
-        for (int i = 0; i < height; i++)
-        {
-            for (int j = 0; j < width; j++)
-            {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 if (matrix[i][j] == 1)
                     setPoint(x + j, y + i, c);
             }
         }
+    }
+
+    public void clear() {
+        this.matrix = new char[height + 2][width + 2];
+    }
+
+    public void print() {
+//        System.out.println();
+
+        for (int i = 0; i < height + 2; i++) {
+            for (int j = 0; j < width + 2; j++) {
+                System.out.print(" ");
+                System.out.print(matrix[i][j]);
+                System.out.print(" ");
+            }
+
+            System.out.println();
+        }
+
+//        System.out.println();
+//        System.out.println();
+//        System.out.println();
     }
 
 
