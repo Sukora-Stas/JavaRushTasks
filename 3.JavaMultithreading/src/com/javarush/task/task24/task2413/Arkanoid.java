@@ -13,7 +13,17 @@ public class Arkanoid {
     private Stand stand;
     private List<Brick> bricks;
 
+    static Arkanoid game;
+
     public static void main(String[] args) {
+
+    }
+
+    public void run() {
+
+    }
+
+    public void move() {
 
     }
 
