@@ -11,6 +11,11 @@ public class Arkanoid {
 
     }
 
+    public Arkanoid(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
     public int getWidth() {
         return width;
     }
