@@ -23,6 +23,13 @@ public class Human implements Alive {
     private int bloodGroup;
 
 
+    public String getPosition() {
+        return "Человек";
+    }
+
+    public void printData() {
+        System.out.println(getPosition() + ": " + name);
+    }
 
     public void setBloodGroup(int code) {
         bloodGroup = code;

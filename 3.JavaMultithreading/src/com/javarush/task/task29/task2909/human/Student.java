@@ -9,6 +9,11 @@ public class Student extends UniversityPerson {
 
     private double averageGrade;
 
+    @Override
+    public String getPosition() {
+        return "Студент";
+    }
+
     private int course;
 
     private Date beginningOfSession;
@@ -35,9 +40,9 @@ public class Student extends UniversityPerson {
 
 
 
-    public void printData() {
-        System.out.println("Студент: " + name);
-    }
+//    public void printData() {
+//        System.out.println(getPosition() + ": " + name);
+//    }
 
     public void incAverageGradeBy01() {
         averageGrade += 0.1;

@@ -14,6 +14,10 @@ public class Teacher extends UniversityPerson {
     }
 
 
+    @Override
+    public String getPosition() {
+        return "Преподаватель";
+    }
 
     public void live() {
         teach();
@@ -23,7 +27,8 @@ public class Teacher extends UniversityPerson {
     }
 
 
-    public void printData() {
-        System.out.println("Преподаватель: " + name);
-    }
+//    public void printData() {
+//        System.out.println(getPosition() + ": " + name);
+//    }
+
 }
