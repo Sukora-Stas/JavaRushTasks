@@ -12,12 +12,9 @@ public class Solution {
         Model model = new MainModel();
         UsersView usersView = new UsersView();
         EditUserView editUserView = new EditUserView();
-
         Controller controller = new Controller();
-
         usersView.setController(controller);
         editUserView.setController(controller);
-
         controller.setModel(model);
         controller.setUsersView(usersView);
         controller.setEditUserView(editUserView);
@@ -25,6 +22,7 @@ public class Solution {
         usersView.fireEventShowAllUsers();
         usersView.fireEventOpenUserEditForm(126);
         editUserView.fireEventUserDeleted(124);
+        editUserView.fireEventUserChanged("Stas", 125, 1);
         usersView.fireEventShowDeletedUsers();
     }
 }

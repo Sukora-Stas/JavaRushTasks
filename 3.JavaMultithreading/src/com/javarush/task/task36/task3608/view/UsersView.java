@@ -13,7 +13,7 @@ public class UsersView implements View {
     private Controller controller;
 
     public void fireEventShowAllUsers() {
-    controller.onShowAllUsers();
+        controller.onShowAllUsers();
     }
 
     public void fireEventOpenUserEditForm(long id) {

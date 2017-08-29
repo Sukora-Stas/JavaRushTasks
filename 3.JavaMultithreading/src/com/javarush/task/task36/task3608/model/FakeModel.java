@@ -18,11 +18,10 @@ public class FakeModel implements Model {
 
     @Override
     public void loadUsers() {
-        List<User> users = new ArrayList<>();
-        users.add(new User("a", 1, 1));
-        users.add(new User("b", 1, 1));
-
-        modelData.setUsers(users);
+        List<User> usr = new ArrayList<>();
+        usr.add(new User("A", 1, 1));
+        usr.add(new User("B", 2, 1));
+        modelData.setUsers(usr);
     }
 
     @Override
@@ -37,6 +36,11 @@ public class FakeModel implements Model {
 
     @Override
     public void deleteUserById(long id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void changeUserData(String name, long id, int level) {
         throw new UnsupportedOperationException();
     }
 }
