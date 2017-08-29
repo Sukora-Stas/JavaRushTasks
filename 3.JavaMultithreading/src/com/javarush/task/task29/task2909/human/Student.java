@@ -9,6 +9,9 @@ public class Student extends Human {
 
     private double averageGrade;
     private String university;
+
+    private int course;
+
     private Date beginningOfSession;
     private Date endOfSession;
 
@@ -19,6 +22,9 @@ public class Student extends Human {
         this.averageGrade = averageGrade;
     }
 
+    public int getCourse() {
+        return course;
+    }
 
 
     public void live() {
