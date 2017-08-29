@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 public class Solution {
     public static void main(String[] args) throws IOException {
         //add your code here
-        //TODO: wtf this working?
+
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String url = bufferedReader.readLine();
         String [] urlParamsTemp = url.split("\\?");
