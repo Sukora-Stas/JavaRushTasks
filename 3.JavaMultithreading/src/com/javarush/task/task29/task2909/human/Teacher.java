@@ -27,8 +27,5 @@ public class Teacher extends UniversityPerson {
     }
 
 
-//    public void printData() {
-//        System.out.println(getPosition() + ": " + name);
-//    }
 
 }
