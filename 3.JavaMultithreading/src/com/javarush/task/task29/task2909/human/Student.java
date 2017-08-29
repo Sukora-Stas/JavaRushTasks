@@ -7,7 +7,6 @@ import java.util.List;
 public class Student extends UniversityPerson {
 
 
-
     private double averageGrade;
 
     private int course;
