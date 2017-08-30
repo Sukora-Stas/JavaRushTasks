@@ -140,41 +140,41 @@ public class Server {
         }
 
 
-//        /**
-//         * Отправка списка всех пользователей
-//         **/
-//        private void sendListOfUsers(Connection connection, String userName) throws IOException {
-//
-//            for (String key : connectionMap.keySet()) {
-//                Message message = new Message(MessageType.USER_ADDED, key);
-//
-//                if (!key.equals(userName)) {
-//                    connection.send(message);
-//                }
-//            }
-//        }
-//
-//
-//        /**
-//         * Главный цикл обработки сообщений сервером
-//         **/
-//        private void serverMainLoop(Connection connection, String userName) throws IOException, ClassNotFoundException {
-//
-//            while (true) {
-//
-//                Message message = connection.receive();
-//                // Если принятое сообщение – это текст (тип TEXT)
-//                if (message.getType() == MessageType.TEXT) {
-//
-//                    String s = userName + ": " + message.getData();
-//
-//                    Message formattedMessage = new Message(MessageType.TEXT, s);
-//                    sendBroadcastMessage(formattedMessage);
-//                } else {
-//                    ConsoleHelper.writeMessage("Error");
-//                }
-//            }
-//        }
+        /**
+         * Отправка списка всех пользователей
+         **/
+        private void sendListOfUsers(Connection connection, String userName) throws IOException {
+
+            for (String key : connectionMap.keySet()) {
+                Message message = new Message(MessageType.USER_ADDED, key);
+
+                if (!key.equals(userName)) {
+                    connection.send(message);
+                }
+            }
+        }
+
+
+        /**
+         * Главный цикл обработки сообщений сервером
+         **/
+        private void serverMainLoop(Connection connection, String userName) throws IOException, ClassNotFoundException {
+
+            while (true) {
+
+                Message message = connection.receive();
+                // Если принятое сообщение – это текст (тип TEXT)
+                if (message.getType() == MessageType.TEXT) {
+
+                    String s = userName + ": " + message.getData();
+
+                    Message formattedMessage = new Message(MessageType.TEXT, s);
+                    sendBroadcastMessage(formattedMessage);
+                } else {
+                    ConsoleHelper.writeMessage("Error");
+                }
+            }
+        }
     }
 }
 
