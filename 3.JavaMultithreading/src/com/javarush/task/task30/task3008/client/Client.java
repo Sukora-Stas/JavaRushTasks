@@ -14,9 +14,63 @@ public class Client {
     protected Connection connection;
     private volatile boolean clientConnected = false;
 
+    /** PSVM Client **/
+    public static void main(String[] args) {
+
+        Client client = new Client();
+        client.run();
+    }
+
+
+
     public class SocketThread extends Thread {
 
     }
+
+
+    /** Methods **/
+    /** run **/
+    public void run() {
+
+        // Создавать новый сокетный поток с помощью метода getSocketThread
+        SocketThread socketThread = getSocketThread();
+        // Помечать созданный поток как daemon, это нужно для того, чтобы при выходе
+        // из программы вспомогательный поток прервался автоматически.
+        socketThread.setDaemon(true);
+        // Запустить вспомогательный поток
+        socketThread.start();
+
+        // Заставить текущий поток ожидать, пока он не получит нотификацию из другого потока
+        try {
+            synchronized (this) {
+                this.wait();
+            }
+        } catch (InterruptedException e) {
+            ConsoleHelper.writeMessage("Ошибка");
+            return;
+        }
+
+        //После того, как поток дождался нотификации, проверь значение clientConnected
+        if (clientConnected) {
+            ConsoleHelper.writeMessage("Соединение установлено. Для выхода наберите команду 'exit'.");
+
+            //Считывай сообщения с консоли пока клиент подключен. Если будет введена команда 'exit', то выйди из цикла
+            while (clientConnected) {
+                String message;
+                if (!(message = ConsoleHelper.readString()).equals("exit")) {
+                    if (shouldSendTextFromConsole()) {
+                        sendTextMessage(message);
+                    }
+                } else {
+                    return;
+                }
+            }
+        }
+        else {
+            ConsoleHelper.writeMessage("Произошла ошибка во время работы клиента.");
+        }
+    }
+
 
     /**
      * Должен запросить ввод адреса сервера и вернуть введенное значение
