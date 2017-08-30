@@ -25,6 +25,110 @@ public class Client {
 
 
     public class SocketThread extends Thread {
+
+        /**
+         * Этот метод будет реализовывать главный цикл обработки сообщений сервера
+         **/
+        protected void clientMainLoop() throws IOException, ClassNotFoundException {
+
+            while (true) {
+
+                // В цикле получать сообщения, используя соединение connection
+                Message message = connection.receive();
+
+                if (!(message.getType() == MessageType.TEXT) &&
+                        !(message.getType() == MessageType.USER_ADDED) &&
+                        !(message.getType() == MessageType.USER_REMOVED)) {
+                    throw new IOException("Unexpected MessageType");
+                }
+
+                if (message.getType() == MessageType.TEXT) {
+                    processIncomingMessage(message.getData());
+
+                } else if (message.getType() == MessageType.USER_ADDED) {
+                    informAboutAddingNewUser(message.getData());
+
+
+                } else if (message.getType() == MessageType.USER_REMOVED) {
+                    informAboutDeletingNewUser(message.getData());
+
+                }
+
+//                switch (message.getType()) {
+//
+//                    // Если это текстовое сообщение (тип TEXT), обработай его с помощью метода processIncomingMessage()
+//                    case TEXT:
+//                        processIncomingMessage(message.getData());
+//                        break;
+//
+//                    // Если это сообщение с типом USER_ADDED, обработай его с помощью метода informAboutAddingNewUser()
+//                    case USER_ADDED:
+//                        informAboutAddingNewUser(message.getData());
+//                        break;
+//
+//                    // Если это сообщение с типом USER_REMOVED, обработай его с помощью метода informAboutDeletingNewUser()
+//                    case USER_REMOVED:
+//                        informAboutDeletingNewUser(message.getData());
+//                        break;
+//
+//                    default:
+//                        throw new IOException("Unexpected MessageType");
+//                }
+            }
+        }
+
+        /**
+         * clientHandshake
+         **/
+        protected void clientHandshake() throws IOException, ClassNotFoundException {
+
+            while (true) {
+
+                // В цикле получать сообщения, используя соединение connection
+                Message message = connection.receive();
+
+
+                if (message.getType() == MessageType.NAME_REQUEST) {
+
+                    connection.send(new Message(MessageType.USER_NAME, getUserName()));
+
+                } else if (message.getType() == MessageType.NAME_ACCEPTED) {
+                    notifyConnectionStatusChanged(true);
+                    return;
+                } else {
+                    throw new IOException("Unexpected MessageType");
+                }
+//                (!(message.getType() == MessageType.NAME_REQUEST) &&
+//                        !(message.getType() == MessageType.NAME_ACCEPTED))
+
+//                switch (message.getType()) {
+//
+//                    // 	Если тип полученного сообщения NAME_REQUEST (сервер запросил имя)
+//                    case NAME_REQUEST: {
+//
+//                        // запросить ввод имени пользователя с помощью метода getUserName()
+//                        // создать новое сообщение с типом USER_NAME и введенным именем, отправить сообщение серверу.
+//                        String userName = getUserName();
+//                        connection.send(new Message(MessageType.USER_NAME, userName));
+//                        break;
+//                    }
+//
+//                    // Если тип полученного сообщения NAME_ACCEPTED (сервер принял имя)
+//                    case NAME_ACCEPTED: {
+//
+//                        // значит сервер принял имя клиента, нужно об этом сообщить главному потоку, он этого очень ждет.
+//                        // Сделай это с помощью метода notifyConnectionStatusChanged(), передав в него true. После этого выйди из метода.
+//                        notifyConnectionStatusChanged(true);
+//                        return;
+//                    }
+//
+//                    default: {
+//                        throw new IOException("Unexpected MessageType");
+//                    }
+//                }
+            }
+        }
+
         /**
          * должен выводить текст message в консоль
          **/
