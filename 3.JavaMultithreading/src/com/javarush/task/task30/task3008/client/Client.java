@@ -6,6 +6,7 @@ import com.javarush.task.task30.task3008.Message;
 import com.javarush.task.task30.task3008.MessageType;
 
 import java.io.IOException;
+import java.net.Socket;
 
 /**
  * Created by Sukora Stas.
@@ -25,6 +26,32 @@ public class Client {
 
 
     public class SocketThread extends Thread {
+
+        /**
+         * Methods
+         **/
+        public void run() {
+
+            try {
+                // Создай новый объект класса java.net.Socket c запросом сервера и порта
+                Socket socket = new Socket(getServerAddress(), getServerPort());
+
+                // Создай объект класса Connection, используя сокет
+                Client.this.connection = new Connection(socket);
+
+
+                clientHandshake();
+                clientMainLoop();
+
+
+            } catch (IOException | ClassNotFoundException e) {
+                notifyConnectionStatusChanged(false);
+            }
+//            } catch (ClassNotFoundException e) {
+//                notifyConnectionStatusChanged(false);
+//            }
+
+        }
 
         /**
          * Этот метод будет реализовывать главный цикл обработки сообщений сервера
