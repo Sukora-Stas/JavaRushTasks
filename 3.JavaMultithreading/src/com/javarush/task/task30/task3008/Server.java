@@ -74,33 +74,6 @@ public class Server {
 
         @Override
         public void run() {
-//            String clientName = null;
-//
-//            ConsoleHelper.writeMessage("Установленно соединение с адресом " + socket.getRemoteSocketAddress());
-//            //Создаем Connection
-//            try (Connection connection = new Connection(socket)) {
-//                //Выводить сообщение, что установлено новое соединение с удаленным адресом
-//                ConsoleHelper.writeMessage("Подключение к порту: " + connection.getRemoteSocketAddress());
-//                //Вызывать метод, реализующий рукопожатие с клиентом, сохраняя имя нового клиента
-//                clientName = serverHandshake(connection);
-//                //Рассылать всем участникам чата информацию об имени присоединившегося участника (сообщение с типом USER_ADDED)
-//                sendBroadcastMessage(new Message(MessageType.USER_ADDED, clientName));
-//                //Сообщать новому участнику о существующих участниках
-//                sendListOfUsers(connection, clientName);
-//                //Запускать главный цикл обработки сообщений сервером
-//                serverMainLoop(connection, clientName);
-//
-//            } catch (IOException | ClassNotFoundException e) {
-//                ConsoleHelper.writeMessage("Ошибка при обмене данными с удаленным адресом");
-//            }
-//
-//            //После того как все исключения обработаны, удаляем запись из connectionMap
-//            connectionMap.remove(clientName);
-//            //и отправлялем сообщение остальным пользователям
-//            sendBroadcastMessage(new Message(MessageType.USER_REMOVED, clientName));
-//
-//            ConsoleHelper.writeMessage("Соединение с удаленным адресом закрыто");
-//
             ConsoleHelper.writeMessage("Установлено новое соединение с удаленным адресом " + socket.getRemoteSocketAddress());
             String userName = null;
             try (Connection connection = new Connection(socket)) {

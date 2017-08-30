@@ -15,7 +15,9 @@ public class ClientGuiModel {
     private String newMessage;
 
 
-    /** methods **/
+    /**
+     * methods
+     **/
     // Добавь метод void addUser(String newUserName), который должен добавлять имя участника во множество, хранящее всех участников
     public void addUser(String newUserName) {
 
@@ -30,7 +32,9 @@ public class ClientGuiModel {
     }
 
 
-    /** getters and setters **/
+    /**
+     * getters and setters
+     **/
     // Добавь геттер для allUserNames, запретив модифицировать возвращенное множество.
     // Разберись, как это можно сделать с помощью метода класса Collections
     public Set<String> getAllUserNames() {

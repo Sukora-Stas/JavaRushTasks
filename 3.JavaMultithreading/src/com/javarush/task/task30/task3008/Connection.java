@@ -39,7 +39,7 @@ public class Connection implements Closeable {
         Message message;
 
         synchronized (in) {
-            message = (Message)in.readObject();
+            message = (Message) in.readObject();
             return message;
         }
 

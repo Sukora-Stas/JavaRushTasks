@@ -47,9 +47,7 @@ public class Client {
             } catch (IOException | ClassNotFoundException e) {
                 notifyConnectionStatusChanged(false);
             }
-//            } catch (ClassNotFoundException e) {
-//                notifyConnectionStatusChanged(false);
-//            }
+
 
         }
 
@@ -81,26 +79,6 @@ public class Client {
 
                 }
 
-//                switch (message.getType()) {
-//
-//                    // Если это текстовое сообщение (тип TEXT), обработай его с помощью метода processIncomingMessage()
-//                    case TEXT:
-//                        processIncomingMessage(message.getData());
-//                        break;
-//
-//                    // Если это сообщение с типом USER_ADDED, обработай его с помощью метода informAboutAddingNewUser()
-//                    case USER_ADDED:
-//                        informAboutAddingNewUser(message.getData());
-//                        break;
-//
-//                    // Если это сообщение с типом USER_REMOVED, обработай его с помощью метода informAboutDeletingNewUser()
-//                    case USER_REMOVED:
-//                        informAboutDeletingNewUser(message.getData());
-//                        break;
-//
-//                    default:
-//                        throw new IOException("Unexpected MessageType");
-//                }
             }
         }
 
@@ -125,34 +103,7 @@ public class Client {
                 } else {
                     throw new IOException("Unexpected MessageType");
                 }
-//                (!(message.getType() == MessageType.NAME_REQUEST) &&
-//                        !(message.getType() == MessageType.NAME_ACCEPTED))
 
-//                switch (message.getType()) {
-//
-//                    // 	Если тип полученного сообщения NAME_REQUEST (сервер запросил имя)
-//                    case NAME_REQUEST: {
-//
-//                        // запросить ввод имени пользователя с помощью метода getUserName()
-//                        // создать новое сообщение с типом USER_NAME и введенным именем, отправить сообщение серверу.
-//                        String userName = getUserName();
-//                        connection.send(new Message(MessageType.USER_NAME, userName));
-//                        break;
-//                    }
-//
-//                    // Если тип полученного сообщения NAME_ACCEPTED (сервер принял имя)
-//                    case NAME_ACCEPTED: {
-//
-//                        // значит сервер принял имя клиента, нужно об этом сообщить главному потоку, он этого очень ждет.
-//                        // Сделай это с помощью метода notifyConnectionStatusChanged(), передав в него true. После этого выйди из метода.
-//                        notifyConnectionStatusChanged(true);
-//                        return;
-//                    }
-//
-//                    default: {
-//                        throw new IOException("Unexpected MessageType");
-//                    }
-//                }
             }
         }
 

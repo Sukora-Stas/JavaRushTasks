@@ -9,18 +9,20 @@ import java.util.Calendar;
 /**
  * Created by Sukora Stas.
  */
-public class BotClient extends Client{
+public class BotClient extends Client {
 
 
-
-
-    /** PSVM **/
-    public static void main(String args []) {
+    /**
+     * PSVM
+     **/
+    public static void main(String args[]) {
         new BotClient().run();
     }
 
 
-    /** inner class */
+    /**
+     * inner class
+     */
     public class BotSocketThread extends SocketThread {
 
 
@@ -49,8 +51,7 @@ public class BotClient extends Client{
             if (message.contains(": ")) {
                 senderName = message.substring(0, message.indexOf(": "));
                 senderMessageText = message.substring(message.indexOf(": ") + 2);
-            }
-            else {
+            } else {
                 senderMessageText = message;
             }
 
@@ -59,31 +60,23 @@ public class BotClient extends Client{
             // Отправить ответ в зависимости от текста принятого сообщения. Если текст сообщения:
             if ("дата".equalsIgnoreCase(senderMessageText)) {
                 format = new SimpleDateFormat("d.MM.YYYY");
-            }
-            else if ("день".equalsIgnoreCase(senderMessageText)) {
+            } else if ("день".equalsIgnoreCase(senderMessageText)) {
                 format = new SimpleDateFormat("d");
-            }
-            else if ("месяц".equalsIgnoreCase(senderMessageText)) {
+            } else if ("месяц".equalsIgnoreCase(senderMessageText)) {
                 format = new SimpleDateFormat("MMMM");
-            }
-            else if ("год".equalsIgnoreCase(senderMessageText)) {
+            } else if ("год".equalsIgnoreCase(senderMessageText)) {
                 format = new SimpleDateFormat("YYYY");
-            }
-            else if ("время".equalsIgnoreCase(senderMessageText)) {
+            } else if ("время".equalsIgnoreCase(senderMessageText)) {
                 format = new SimpleDateFormat("H:mm:ss");
-            }
-            else if ("час".equalsIgnoreCase(senderMessageText)) {
+            } else if ("час".equalsIgnoreCase(senderMessageText)) {
                 format = new SimpleDateFormat("H");
-            }
-            else if ("минуты".equalsIgnoreCase(senderMessageText)) {
+            } else if ("минуты".equalsIgnoreCase(senderMessageText)) {
                 format = new SimpleDateFormat("m");
-            }
-            else if ("секунды".equalsIgnoreCase(senderMessageText)) {
+            } else if ("секунды".equalsIgnoreCase(senderMessageText)) {
                 format = new SimpleDateFormat("s");
             }
 
-            if (format != null)
-            {
+            if (format != null) {
                 sendTextMessage("Информация для " + senderName + ": " + format.format(Calendar.getInstance().getTime()));
             }
 
@@ -91,7 +84,9 @@ public class BotClient extends Client{
 
     }
 
-    /** methods **/
+    /**
+     * methods
+     **/
 
     @Override
     protected SocketThread getSocketThread() {
@@ -109,7 +104,7 @@ public class BotClient extends Client{
     protected String getUserName() {
         // метод должен генерировать новое имя бота, например: date_bot_XX, где XX – любое число от 0 до 99.
         // Этот метод должен возвращать каждый раз новое значение, на случай, если на сервере захотят зарегистрироваться несколько ботов, у них должны быть разные имена.
-        int botsCounter=(int)(Math.random()*100);
+        int botsCounter = (int) (Math.random() * 100);
 
         return "date_bot_" + botsCounter;
 
