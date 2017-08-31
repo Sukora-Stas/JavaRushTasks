@@ -6,9 +6,6 @@ import com.javarush.task.task31.task3110.ZipFileManager;
 
 import java.util.List;
 
-/**
- * Created by Sukora Stas.
- */
 public class ZipContentCommand extends ZipCommand {
     @Override
     public void execute() throws Exception {
