@@ -1,8 +1,5 @@
 package com.javarush.task.task31.task3110;
 
-/**
- * Created by Sukora Stas.
- */
 public class FileProperties {
     private String name;
     private long size;
