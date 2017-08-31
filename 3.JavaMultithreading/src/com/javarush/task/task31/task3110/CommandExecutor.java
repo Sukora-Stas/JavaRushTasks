@@ -1,14 +1,10 @@
 package com.javarush.task.task31.task3110;
 
-import com.javarush.task.task31.task3110.Operation;
 import com.javarush.task.task31.task3110.command.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Sukora Stas.
- */
 public class CommandExecutor {
     private static final Map<Operation, Command> allKnownCommandsMap = new HashMap<>();
 
