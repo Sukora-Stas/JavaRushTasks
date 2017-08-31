@@ -7,9 +7,6 @@ import com.javarush.task.task31.task3110.exception.PathIsNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * Created by Sukora Stas.
- */
 public class ZipCreateCommand extends ZipCommand {
     @Override
     public void execute() throws Exception {
