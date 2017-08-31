@@ -1,4 +1,31 @@
-taskKey="com.javarush.task.task31.task3110.big05"
+taskKey="com.javarush.task.task31.task3110.big06"
+
+Archiver (6)
+
+Представь, что пользователь сообщает нам с помощью переменной Operation operation, что он хочет
+сделать. Тогда мы должны проверить значение этой переменной, создать объект соответствующего
+класса команды и вызвать у него метод execute(). Чтобы не создавать объект класса нужной команды
+каждый раз, его нужно где-то хранить. Создадим для этих целей класс CommandExecutor, пусть у него
+будет открытым только один публичный статический метод execute(Operation operation), который найдет
+нужную команду и вызовет у нее метод execute.
+1.	Создай класс CommandExecutor. Он должен быть в корне задачи, не стоит добавлять его в пакет command
+2.	Запрети явный вызов конструктора этого класса
+3.	Добавь в класс приватное статическое константное хранилище команд Map<Operation, Command>
+allKnownCommandsMap
+4.	Проинициализируй переменную allKnownCommandsMap так, чтобы каждому значению из
+Operation соответствовала правильная команда.
+5.	Реализуй публичный статический метод execute(Operation operation) throws Exception, который
+должен брать нужную команду из allKnownCommandsMap и вызывать у нее метод execute.
+Догадался ты или нет, но ты только что реализовал паттерн Команда!
+
+
+Требования:
+1.	В корне задачи должен быть создан класс CommandExecutor.
+2.	Запрети явный вызов конструктора CommandExecutor.
+3.	В классе CommandExecutor нужно создать приватное статическое константное поле Map<Operation, Command> allKnownCommandsMap.
+4.	Поле allKnownCommandsMap должно быть проинициализировано всеми значениями Operation и соответствующими Command-классами.
+5.	В классе CommandExecutor нужно реализовать метод execute(Operation operation), который будет вызывать execute у нужной команды из allKnownCommandsMap.
+
 
 Archiver (5)
 
@@ -18,14 +45,6 @@ Archiver (5)
 2.4. Команда добавления файла в архив – class ZipAddCommand
 2.5. Команда удаления файла из архива – class ZipRemoveCommand
 
-
-Требования:
-1.	В пакете command должен быть создан абстрактный класс ZipCommand реализующий интерфейс Command.
-2.	В пакете command должен быть создан класс ZipCreateCommand унаследованный от ZipCommand.
-3.	В пакете command должен быть создан класс ZipContentCommand унаследованный от ZipCommand.
-4.	В пакете command должен быть создан класс ZipExtractCommand унаследованный от ZipCommand.
-5.	В пакете command должен быть создан класс ZipAddCommand унаследованный от ZipCommand.
-6.	В пакете command должен быть создан класс ZipRemoveCommand унаследованный от ZipCommand.
 
 
 Archiver (4)
