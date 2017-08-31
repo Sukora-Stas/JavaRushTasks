@@ -10,9 +10,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-/**
- * Created by Sukora Stas.
- */
 public class ZipFileManager {
     // Полный путь zip файла
     private final Path zipFile;
