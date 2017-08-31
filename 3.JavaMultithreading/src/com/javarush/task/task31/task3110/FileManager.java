@@ -7,9 +7,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Sukora Stas.
- */
 public class FileManager {
     private Path rootPath;
     private List<Path> fileList;
