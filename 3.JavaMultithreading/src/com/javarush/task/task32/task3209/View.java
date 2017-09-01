@@ -16,6 +16,10 @@ public class View extends JFrame implements ActionListener {
     private JTextPane htmlTextPane = new JTextPane();
     private JEditorPane plainTextPane = new JEditorPane();
 
+    public void selectedTabChanged(){
+
+    }
+
     public void initGui() {
         initMenuBar();
         initEditor();
