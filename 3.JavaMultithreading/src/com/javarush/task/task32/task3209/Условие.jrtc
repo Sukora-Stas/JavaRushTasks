@@ -1,4 +1,99 @@
-taskKey="com.javarush.task.task32.task3209.big06"
+taskKey="com.javarush.task.task32.task3209.big07"
+
+HTML Editor (7)
+
+Добавь класс MenuHelper. Это будет вспомогательный класс для инициализации и настройки
+меню. У меню будет следующая структура:
+- Файл
+-- Новый
+-- Открыть
+-- Сохранить
+-- Сохранить как...
+-- Выход
+
+- Редактировать
+-- Отменить
+-- Вернуть
+-- Вырезать
+-- Копировать
+-- Вставить
+
+- Стиль
+-- Полужирный
+-- Подчеркнутый
+-- Курсив
+-- Подстрочный знак
+-- Надстрочный знак
+-- Зачеркнутый
+
+- Выравнивание
+-- По левому краю
+-- По центру
+-- По правому краю
+
+- Цвет
+-- Красный
+-- Оранжевый
+-- Желтый
+-- Зеленый
+-- Синий
+-- Голубой
+-- Пурпурный
+-- Черный
+
+- Шрифт
+-- Шрифт
+--- SansSerif, Serif, Monospaced, Dialog, DialogInput,
+-- Размер шрифта
+--- 6, 8, 10, 12, 14, 16, 20, 24, 32, 36, 48, 72
+
+- Помощь
+-- О программе
+
+7.1.	Реализуй в MenuHelper статический метод JMenuItem addMenuItem(JMenu parent, String
+text, ActionListener actionListener), где parent - меню в которое мы добавляем пункт, text -
+текст добавляемого пункта, actionListener - слушатель действий добавляемого пункта
+меню. Он должен:
+7.1.1.	Создавать новый пункт меню JMenuItem, используя text.
+7.1.2.	Устанавливать этому пункту слушателя действий с помощью метода addActionListener().
+7.1.3.	Добавлять в parent созданный пункт меню.
+7.1.4.	Возвращать созданный пункт меню.
+7.2.	Реализуй статический метод JMenuItem addMenuItem(JMenu parent, Action action). Этот
+метод аналогичен предыдущему, но в качестве параметра принимает действие action,
+которое необходимо выполнить при выборе пункта меню. Подсказка: при создании
+JMenuItem передай в конструктор action. Разберись откуда возьмется имя пункта меню,
+если его не устанавливать дополнительно.
+7.3.	Реализуй статический метод JMenuItem addMenuItem(JMenu parent, String text, Action
+action), который добавляет в parent новый пункт меню с текстом text и действием action
+при выборе этого метода. При реализации используй вызов метода из
+предыдущего пункта.
+7.4.	Добавь в MenuHelper заглушки для следующих статический методов:
+7.4.1.	void initHelpMenu(View view, JMenuBar menuBar) - инициализация меню помощи.
+7.4.2.	void initFontMenu(View view, JMenuBar menuBar) - инициализация меню выбора
+шрифта.
+7.4.3.	void initColorMenu(View view, JMenuBar menuBar) - инициализация меню выбора цвета.
+7.4.4.	void initAlignMenu(View view, JMenuBar menuBar) - инициализация меню
+выравнивания.
+7.4.5.	void initStyleMenu(View view, JMenuBar menuBar) - инициализация меню выбора стиля
+текста.
+7.4.6.	void initEditMenu(View view, JMenuBar menuBar) - инициализация меню
+редактирования текста.
+7.4.7.	void initFileMenu(View view, JMenuBar menuBar) - инициализация меню Файл.
+
+
+Требования:
+1.	Класс MenuHelper должен быть создан в отдельном файле.
+2.	Класс MenuHelper должен реализовывать публичный статический метод JMenuItem addMenuItem(JMenu parent, String text, ActionListener actionListener).
+3.	Класс MenuHelper должен реализовывать публичный статический метод JMenuItem addMenuItem(JMenu parent, Action action).
+4.	Класс MenuHelper должен реализовывать публичный статический метод JMenuItem addMenuItem(JMenu parent, String text, Action action).
+5.	Класс MenuHelper должен содержать публичный статический метод void initHelpMenu(View view, JMenuBar menuBar).
+6.	Класс MenuHelper должен содержать публичный статический метод void initFontMenu(View view, JMenuBar menuBar).
+7.	Класс MenuHelper должен содержать публичный статический метод void initColorMenu(View view, JMenuBar menuBar).
+8.	Класс MenuHelper должен содержать публичный статический метод void initAlignMenu(View view, JMenuBar menuBar).
+9.	Класс MenuHelper должен содержать публичный статический метод void initStyleMenu(View view, JMenuBar menuBar).
+10.	Класс MenuHelper должен содержать публичный статический метод void initEditMenu(View view, JMenuBar menuBar).
+11.	Класс MenuHelper должен содержать публичный статический метод void initFileMenu(View view, JMenuBar menuBar).
+
 
 HTML Editor (6)
 
@@ -20,16 +115,6 @@ getContentPane(), его реализация унаследовалась от 
 После запуска приложения можно будет увидеть текущие результаты: две независимые
 закладки (HTML и Текст), в каждой из которых можно набирать свой текст.
 
-
-Требования:
-1.	В методе initEditor() для компонента htmlTextPane должен устанавливаться тип контента "text/html" через сеттер setContentType.
-2.	В методе initEditor() должен создаваться новый локальный компонент JScrollPane через конструктор принимающий htmlTextPane.
-3.	В методе initEditor() для компонента tabbedPane должна добавляться вкладка с именем "HTML" и созданным компонентом JScrollPane на базе htmlTextPane.
-4.	В методе initEditor() должен создаваться новый локальный компонент JScrollPane через конструктор принимающий plainTextPane.
-5.	В методе initEditor() для компонента tabbedPane должна добавляться вкладка с именем "Текст" и созданным компонентом JScrollPane на базе plainTextPane.
-6.	В методе initEditor() для компонента tabbedPane должен устанавливаться предпочтительный размер панели, через сеттер setPreferredSize.
-7.	В методе initEditor() для компонента tabbedPane должен добавляться слушатель TabbedPaneChangeListener через метод addChangeListener.
-8.	Метод initEditor() должен добавлять по центру панели контента текущего фрейма нашу панель с вкладками, через getContentPane().add().
 
 
 HTML Editor (5)
@@ -105,28 +190,6 @@ HTML Editor (2)
 2.3.	Добавь в контроллер метод exit(), он должен вызывать статический метод exit у класса System.
 2.3.1. 	 Метод exit в классе Controller не должен быть статическим.
 2.4.	Добавь в представление метод exit(), он должен вызывать exit() у контроллера.
-
-
-
-HTML Editor (1)
-
-Сегодня мы напишем HTML редактор с графическим интерфейсом. В качестве библиотеки для
-создания графического интерфейса воспользуемся Swing. А в качестве архитектурного каркаса
-нашего приложения будем использовать MVC модель.
-1.1.	Объяви класс Controller и класс View. Класс View должен быть унаследован от JFrame и
-реализовывать интерфейс ActionListener.
-1.2.	Добавь в класс Controller поля, отвечающие за представление View view и модель
-HTMLDocument document. Здесь и далее, классы, которые мы не объявляли, но
-используем в коде скорее всего все находятся в библиотеке swing. Например, класс
-HTMLDocument реализован в пакете javax.swing.text.html.
-1.3.	Добавь в класс Controller поле, которое будет отвечать за файл, который сейчас открыт в
-нашем редакторе (текущий файл) File currentFile.
-1.4.	Добавь конструктор класса Controller. Он должен принимать в качестве параметра
-представление и инициализировать соответствующее поле класса.
-1.5.  Добавь в Controller пустой метод main.
-1.6.	Добавь в класс View поле Controller controller.
-1.7.	Добавь в класс View сеттер и геттер для поля controller.
-1.8.	Добавь пустую реализацию метода, который объявлен в интерфейсе ActionListener.
 
 
 
