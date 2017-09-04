@@ -22,11 +22,20 @@ public class Controller {
     }
 
     public void init() {
-
+        createNewDocument();
     }
 
     public void createNewDocument() {
-
+        //Выбирать html вкладку у представления
+        view.selectHtmlTab();
+        //Сбрасывать текущий документ
+        resetDocument();
+        //Устанавливать новый заголовок окна
+        view.setTitle("HTML редактор");
+        //Сбрасывать правки в Undo менеджере
+        view.resetUndo();
+        //Обнулить переменную currentFile
+        currentFile = null;
     }
 
     public void openDocument() {
