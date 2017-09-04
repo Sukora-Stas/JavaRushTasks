@@ -6,6 +6,7 @@ import javax.swing.text.html.HTMLEditorKit;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 
 /**
  * Created by Sukora Stas.
@@ -37,16 +38,37 @@ public class Controller {
         view.update();
     }
 
+    //Он будет записывать переданный текст с html тегами в документ document
     public void setPlainText(String text) {
+        //Сбрось документ
         resetDocument();
-
+        //Создай новый реадер StringReader на базе переданного текста
         StringReader stringReader = new StringReader(text);
 
         try {
-            new HTMLEditorKit().read(stringReader,document,0);
-        } catch (Exception e){
+            //Вызови метод read() из класса HTMLEditorKit, который вычитает данные из реадера в документ document
+            new HTMLEditorKit().read(stringReader, document, 0);
+
+        } catch (Exception e) {
+            //Проследи, чтобы метод не кидал исключения. Их необходимо просто логировать
             ExceptionHandler.log(e);
         }
+    }
+
+    //он должен получать текст из документа со всеми html тегами
+    public String getPlainText() {
+        //Создай объект StringWriter
+        StringWriter stringWriter = new StringWriter();
+        try {
+            //Перепиши все содержимое из документа document в созданный объект с помощью метода write класса HTMLEditorKit
+            new HTMLEditorKit().write(stringWriter, document, 0, document.getLength());
+
+        } catch (Exception e) {
+            //Как обычно, метод не должен кидать исключений
+            ExceptionHandler.log(e);
+        }
+
+        return stringWriter.toString();
     }
 
     public void exit() {
