@@ -33,7 +33,7 @@ public class View extends JFrame implements ActionListener {
         }
     }
 
-    public void selectedTabChanged(){
+    public void selectedTabChanged() {
 
     }
 
@@ -78,7 +78,7 @@ public class View extends JFrame implements ActionListener {
         tabbedPane.addChangeListener(new TabbedPaneChangeListener(this));
 
         //Добавлять по центру панели контента текущего фрейма нашу панель с вкладками
-        getContentPane().add(tabbedPane,BorderLayout.CENTER);
+        getContentPane().add(tabbedPane, BorderLayout.CENTER);
     }
 
     public void init() {
@@ -86,6 +86,16 @@ public class View extends JFrame implements ActionListener {
         FrameListener frameListener = new FrameListener(this);
         addWindowListener(frameListener);
         setVisible(true);
+    }
+
+    public boolean canUndo() {
+//        return undoManager.canUndo();
+        return false;
+    }
+
+    public boolean canRedo() {
+//        return undoManager.canRedo();
+        return false;
     }
 
     public void exit() {
