@@ -25,6 +25,23 @@ public class Controller {
 
     }
 
+    public void createNewDocument() {
+
+    }
+
+    public void openDocument() {
+
+    }
+
+    public void saveDocument() {
+
+    }
+
+    public void saveDocumentAs() {
+
+    }
+
+
     public void resetDocument() {
         if (document != null) {
             //Удалять у текущего документа document слушателя правок которые можно отменить/вернуть
