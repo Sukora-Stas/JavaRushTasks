@@ -32,4 +32,7 @@ public class Controller {
         controller.init();
     }
 
+    public HTMLDocument getDocument() {
+        return document;
+    }
 }
