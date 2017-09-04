@@ -1,4 +1,32 @@
-taskKey="com.javarush.task.task32.task3209.big12"
+taskKey="com.javarush.task.task32.task3209.big13"
+
+HTML Editor (13)
+
+Реализуем класс TextEditMenuListener в пакет listeners. Этот класс будет работать аналогично
+классу UndoMenuListener только для других пунктов меню. Пункты меню, отвечающие за
+стиль, шрифт, цвет и т.д. должны быть доступны только тогда, когда в нашем редакторе
+выбрана первая вкладка.
+13.1.	Добавь в представление метод boolean isHtmlTabSelected(). Он должен возвращать
+true, если выбрана вкладка, отображающая html в панели вкладок (подсказка: ее индекс 0).
+13.2.	Добавь в класс TextEditMenuListener поле View, проинициализируй его в конструкторе
+класса.
+13.3.	В классе TextEditMenuListener переопредели метод menuSelected(MenuEvent
+menuEvent). Он должен:
+13.3.1.	Из переданного параметра получать объект, над которым было совершено действие. В
+нашем случае это будет объект с типом JMenu.
+13.3.2.	У полученного меню получать список компонентов (пунктов меню).
+13.3.3.	Для каждого пункта меню вызывать метод setEnabled, передав в качестве параметра
+результат вызова метода isHtmlTabSelected() из представления.
+Запусти приложение и убедись, что пункты меню стиль, выравнивание, цвет и шрифт доступны
+только, когда активна закладка HTML и не доступны для закладки Текст.
+
+
+Требования:
+1.	Класс View должен содержать публичный метод boolean isHtmlTabSelected(), определяющий текущую вкладку.
+2.	Класс TextEditMenuListener должен содержать поле View view.
+3.	Конструктор класса TextEditMenuListener(View view) должен инициализировать поле view.
+4.	Метод menuSelected(MenuEvent menuEvent) класса TextEditMenuListener должен устанавливать доступность пунктов меню стиль, выравнивание, цвет и шрифт в зависимости от выбранной вкладки.
+
 
 HTML Editor (12)
 
@@ -15,18 +43,6 @@ redo() у представления.
 Зачеркнутый работают. Пункты, отвечающие за отмену и возврат действия пока не
 подключены к контроллеру и мы не сможем их проверить.
 
-
-Требования:
-1.	Класс RedoAction должен содержать поле View view.
-2.	Конструктор класса RedoAction(View view) должен инициализировать поле view.
-3.	Метод actionPerformed(ActionEvent actionEvent) класса RedoAction должен вызывать метод redo() у представления.
-4.	Класс UndoAction должен содержать поле View view.
-5.	Конструктор класса UndoAction(View view) должен инициализировать поле view.
-6.	Метод actionPerformed(ActionEvent actionEvent) класса UndoAction должен вызывать метод undo() у представления.
-7.	Конструктор без параметров класса SubscriptAction должен вызывать конструктор суперкласса с параметром StyleConstants.Subscript.
-8.	Метод actionPerformed(ActionEvent actionEvent) класса SubscriptAction должен использовать метод setSubscript у StyleConstants с параметрами: SimpleAttributeSet и !StyleConstants.isSubscript(mutableAttributeSet).
-9.	Конструктор без параметров класса SuperscriptAction должен вызывать конструктор суперкласса с параметром StyleConstants.Superscript.
-10.	Метод actionPerformed(ActionEvent actionEvent) класса SuperscriptAction должен использовать метод setSuperscript у StyleConstants с параметрами: SimpleAttributeSet и !StyleConstants.isSuperscript(mutableAttributeSet).
 
 
 HTML Editor (11)
@@ -126,88 +142,6 @@ redoMenuItem). Чем он будет заниматься узнаешь чут
 8.2.2.	TextEditMenuListener. Этот класс также должен реализовывать интерфейс MenuListener.
 Добавь ему конструктор TextEditMenuListener(View view). В следующих заданиях мы
 рассмотрим его детальнее.
-
-
-
-HTML Editor (7)
-
-Добавь класс MenuHelper. Это будет вспомогательный класс для инициализации и настройки
-меню. У меню будет следующая структура:
-- Файл
--- Новый
--- Открыть
--- Сохранить
--- Сохранить как...
--- Выход
-
-- Редактировать
--- Отменить
--- Вернуть
--- Вырезать
--- Копировать
--- Вставить
-
-- Стиль
--- Полужирный
--- Подчеркнутый
--- Курсив
--- Подстрочный знак
--- Надстрочный знак
--- Зачеркнутый
-
-- Выравнивание
--- По левому краю
--- По центру
--- По правому краю
-
-- Цвет
--- Красный
--- Оранжевый
--- Желтый
--- Зеленый
--- Синий
--- Голубой
--- Пурпурный
--- Черный
-
-- Шрифт
--- Шрифт
---- SansSerif, Serif, Monospaced, Dialog, DialogInput,
--- Размер шрифта
---- 6, 8, 10, 12, 14, 16, 20, 24, 32, 36, 48, 72
-
-- Помощь
--- О программе
-
-7.1.	Реализуй в MenuHelper статический метод JMenuItem addMenuItem(JMenu parent, String
-text, ActionListener actionListener), где parent - меню в которое мы добавляем пункт, text -
-текст добавляемого пункта, actionListener - слушатель действий добавляемого пункта
-меню. Он должен:
-7.1.1.	Создавать новый пункт меню JMenuItem, используя text.
-7.1.2.	Устанавливать этому пункту слушателя действий с помощью метода addActionListener().
-7.1.3.	Добавлять в parent созданный пункт меню.
-7.1.4.	Возвращать созданный пункт меню.
-7.2.	Реализуй статический метод JMenuItem addMenuItem(JMenu parent, Action action). Этот
-метод аналогичен предыдущему, но в качестве параметра принимает действие action,
-которое необходимо выполнить при выборе пункта меню. Подсказка: при создании
-JMenuItem передай в конструктор action. Разберись откуда возьмется имя пункта меню,
-если его не устанавливать дополнительно.
-7.3.	Реализуй статический метод JMenuItem addMenuItem(JMenu parent, String text, Action
-action), который добавляет в parent новый пункт меню с текстом text и действием action
-при выборе этого метода. При реализации используй вызов метода из
-предыдущего пункта.
-7.4.	Добавь в MenuHelper заглушки для следующих статический методов:
-7.4.1.	void initHelpMenu(View view, JMenuBar menuBar) - инициализация меню помощи.
-7.4.2.	void initFontMenu(View view, JMenuBar menuBar) - инициализация меню выбора
-шрифта.
-7.4.3.	void initColorMenu(View view, JMenuBar menuBar) - инициализация меню выбора цвета.
-7.4.4.	void initAlignMenu(View view, JMenuBar menuBar) - инициализация меню
-выравнивания.
-7.4.5.	void initStyleMenu(View view, JMenuBar menuBar) - инициализация меню выбора стиля
-текста.
-7.4.6.	void initEditMenu(View view, JMenuBar menuBar) - инициализация меню
-редактирования текста.
-7.4.7.	void initFileMenu(View view, JMenuBar menuBar) - инициализация меню Файл.
 
 
 

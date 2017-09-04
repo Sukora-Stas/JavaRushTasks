@@ -26,9 +26,9 @@ public class TextEditMenuListener implements MenuListener {
         Component[] components = jMenu.getMenuComponents();
         //Для каждого пункта меню вызывать метод setEnabled, передав в качестве параметра
         //результат вызова метода isHtmlTabSelected() из представления.
-//        for (Component component : components) {
-//            component.setEnabled(view.isHtmlTabSelected());
-//        }
+        for (Component component : components) {
+            component.setEnabled(view.isHtmlTabSelected());
+        }
 
     }
 
