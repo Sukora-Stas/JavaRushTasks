@@ -1,6 +1,7 @@
 package com.javarush.task.task32.task3209;
 
 import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
 import java.io.File;
 
 /**
@@ -18,6 +19,19 @@ public class Controller {
 
     public void init() {
 
+    }
+
+    public void resetDocument() {
+        if (document != null) {
+            //Удалять у текущего документа document слушателя правок которые можно отменить/вернуть
+            document.removeUndoableEditListener(view.getUndoListener());
+        }
+        //Создавать новый документ по умолчанию и присваивать его полю document
+        document = (HTMLDocument) new HTMLEditorKit().createDefaultDocument();
+        //Добавлять новому документу слушателя правок
+        document.addUndoableEditListener(view.getUndoListener());
+        //Вызывать у представления метод update()
+        view.update();
     }
 
     public void exit(){
