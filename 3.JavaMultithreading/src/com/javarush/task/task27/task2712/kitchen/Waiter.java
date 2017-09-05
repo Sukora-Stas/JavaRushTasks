@@ -10,10 +10,7 @@ import java.util.Observer;
  */
 public class Waiter implements Observer {
     @Override
-    public void update(Observable observable, Object o)
-    {
-
-            ConsoleHelper.writeMessage(o + " was cooked by " + observable);
-
+    public void update(Observable observable, Object arg) {
+        ConsoleHelper.writeMessage((Order) arg + " was cooked by " + observable);
     }
 }
