@@ -2,6 +2,7 @@ package com.javarush.task.task27.task2712;
 
 import com.javarush.task.task27.task2712.kitchen.Cook;
 import com.javarush.task.task27.task2712.kitchen.Waiter;
+import com.javarush.task.task27.task2712.statistic.StatisticManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,36 +15,32 @@ public class Restaurant {
 
     private static final int ORDER_CREATING_INTERVAL = 100;
     public static void main(String[] args) {
-        Cook cook1 = new Cook("Amigo");
-        Cook cook2 = new Cook("Bingo");
         List<Tablet> tablets = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        Cook cook = new Cook("Amigo");
+        Cook cook2 = new Cook("Cook");
+        StatisticManager.getInstance().register(cook);
+        StatisticManager.getInstance().register(cook2);
+        OrderManager orderManager = new OrderManager();
+        for (int i = 1; i < 6; i++) {
             Tablet tablet = new Tablet(i);
+            tablet.addObserver(orderManager);
             tablets.add(tablet);
-            if (i%2 == 0) tablet.addObserver(cook2);
-            else tablet.addObserver(cook1);
         }
         Waiter waiter = new Waiter();
-        cook1.addObserver(waiter);
+        cook.addObserver(waiter);
         cook2.addObserver(waiter);
-        /*
-        tablet.addObserver(cook);
-        cook.addObserver(new Waiter());
-        Order order = tablet.createOrder();
-        */
-        Thread thread = new Thread(new RandomOrderGeneratorTask(tablets, ORDER_CREATING_INTERVAL));
-        //thread.setDaemon(true);
+        RandomOrderGeneratorTask tasks = new RandomOrderGeneratorTask(tablets, ORDER_CREATING_INTERVAL);
+        Thread thread = new Thread(tasks);
         thread.start();
         try {
             Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            return;
+        } catch (InterruptedException ignore) {
         }
         thread.interrupt();
-        DirectorTablet director = new DirectorTablet();
-        director.printAdvertisementProfit();
-        director.printCookWorkloading();
-        director.printActiveVideoSet();
-        director.printArchivedVideoSet();
+        DirectorTablet directorTablet = new DirectorTablet();
+        directorTablet.printAdvertisementProfit();
+        directorTablet.printCookWorkloading();
+        directorTablet.printActiveVideoSet();
+        directorTablet.printArchivedVideoSet();
     }
 }

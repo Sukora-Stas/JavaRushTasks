@@ -10,25 +10,30 @@ import java.util.Observer;
 /**
  * Created by Sukora Stas.
  */
-public class Cook extends Observable implements Observer {
+public class Cook extends Observable {
+
     private String name;
+    private boolean busy;
 
-    public Cook(String name) {
-        this.name = name;
-    }
+    public boolean isBusy() {return busy;}
+
+    public Cook(String name) {this.name = name;}
 
     @Override
-    public void update(Observable o, Object arg) {
-        int coolingTime = ((Order) arg).getTotalCookingTime();
-        ConsoleHelper.writeMessage("Start cooking - " + arg.toString() + ", cooking time " + coolingTime + "min");
-        StatisticManager.getInstance().register(new CookedOrderEventDataRow(((Order) arg).getTablet().toString(),
-                this.name, ((Order) arg).getTotalCookingTime() ,((Order) arg).getDishes()));
+    public String toString() {return name;}
+
+    public void startCookingOrder(Order order) {
+        this.busy = true;
+        int orderTime = order.getTotalCookingTime();
+        ConsoleHelper.writeMessage("Start cooking - " + order + ", cooking time " + orderTime + "min");
+        CookedOrderEventDataRow eventDataRow = new CookedOrderEventDataRow(order.getTablet().toString(), name, orderTime * 60, order.getDishes());
+        StatisticManager.getInstance().register(eventDataRow);
         setChanged();
-        notifyObservers(arg);
-    }
-
-    @Override
-    public String toString() {
-        return name;
+        notifyObservers(order);
+        try {
+            Thread.sleep(orderTime * 10);
+        } catch (InterruptedException e) {
+        }
+        this.busy = false;
     }
 }

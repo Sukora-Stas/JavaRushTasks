@@ -14,6 +14,11 @@ import java.util.*;
 public class StatisticManager {
     private static StatisticManager ourInstance = new StatisticManager();
     private StatisticStorage statisticStorage = new StatisticStorage();
+
+    public Set<Cook> getCooks() {
+        return cooks;
+    }
+
     private Set<Cook> cooks = new HashSet<Cook>();
 
     public static StatisticManager getInstance() {
