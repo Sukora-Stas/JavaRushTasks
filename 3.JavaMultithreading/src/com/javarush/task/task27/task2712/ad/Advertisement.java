@@ -9,9 +9,7 @@ public class Advertisement {
     private long initialAmount;
     private int hits;
     private int duration;
-
     private long amountPerOneDisplaying;
-
 
     public Advertisement(Object content, String name, long initialAmount, int hits, int duration) {
         this.content = content;
@@ -19,9 +17,19 @@ public class Advertisement {
         this.initialAmount = initialAmount;
         this.hits = hits;
         this.duration = duration;
-
-//        if (hits > 0) amountPerOneDisplaying = (long) (initialAmount * 1.0 / hits);
         this.amountPerOneDisplaying = initialAmount / hits;
+    }
+
+    public Object getContent() {
+        return content;
+    }
+
+    public long getInitialAmount() {
+        return initialAmount;
+    }
+
+    public int getHits() {
+        return hits;
     }
 
     public String getName() {
@@ -32,17 +40,12 @@ public class Advertisement {
         return duration;
     }
 
-    public int getHits() {
-        return hits;
-    }
-
     public long getAmountPerOneDisplaying() {
         return amountPerOneDisplaying;
     }
 
     public void revalidate() {
-        if (hits <= 0)
-            throw new UnsupportedOperationException();
+        if (hits < 1) throw new UnsupportedOperationException();
         hits--;
     }
 }

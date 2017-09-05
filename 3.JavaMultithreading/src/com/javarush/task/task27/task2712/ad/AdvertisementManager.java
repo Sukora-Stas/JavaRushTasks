@@ -1,6 +1,9 @@
 package com.javarush.task.task27.task2712.ad;
 
 import com.javarush.task.task27.task2712.ConsoleHelper;
+import com.javarush.task.task27.task2712.statistic.StatisticManager;
+import com.javarush.task.task27.task2712.statistic.event.NoAvailableVideoEventDataRow;
+import com.javarush.task.task27.task2712.statistic.event.VideoSelectedEventDataRow;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,9 +14,9 @@ import java.util.List;
  * Created by Sukora Stas.
  */
 public class AdvertisementManager {
-    private static final AdvertisementStorage storage = AdvertisementStorage.getInstance();
-    private List<Advertisement> videos = storage.list();
+    public final AdvertisementStorage storage = AdvertisementStorage.getInstance();
     private int timeSeconds;
+    private List<Advertisement> videos = storage.list();
     private long maxProfit = 0;
     private int minRemainingTime = timeSeconds;
 
@@ -33,7 +36,7 @@ public class AdvertisementManager {
             totalAmount += ad.getAmountPerOneDisplaying();
             totalDuration += ad.getDuration();
         }
-//        StatisticManager.getInstance().register(new VideoSelectedEventDataRow(bestVariant, totalAmount, totalDuration));
+        StatisticManager.getInstance().register(new VideoSelectedEventDataRow(bestVariant, totalAmount, totalDuration));
     }
 
     private List<Advertisement> pickVideosToList(List<Advertisement> previousList, Advertisement previousAd, int remainingTime,
@@ -49,8 +52,7 @@ public class AdvertisementManager {
             if (remainingTime == 0) break;
             if (newList.contains(ad)) continue;
             if (ad.getHits() <= 0) continue;
-            if (remainingTime >= ad.getDuration())
-                bestResult = pickVideosToList(newList, ad, remainingTime, profit, bestResult);
+            if (remainingTime >= ad.getDuration()) bestResult = pickVideosToList(newList, ad, remainingTime, profit, bestResult);
         }
         if (profit > maxProfit) {
             maxProfit = profit;
@@ -62,7 +64,7 @@ public class AdvertisementManager {
         } else if (profit == maxProfit && remainingTime == minRemainingTime && bestResult.size() > newList.size())
             bestResult = newList;
         if (bestResult.isEmpty()) {
-//            StatisticManager.getInstance().register(new NoAvailableVideoEventDataRow(timeSeconds));
+            StatisticManager.getInstance().register(new NoAvailableVideoEventDataRow(timeSeconds));
             throw new NoVideoAvailableException();
         }
         Collections.sort(bestResult, new Comparator<Advertisement>() {
@@ -77,4 +79,5 @@ public class AdvertisementManager {
         });
         return bestResult;
     }
+
 }

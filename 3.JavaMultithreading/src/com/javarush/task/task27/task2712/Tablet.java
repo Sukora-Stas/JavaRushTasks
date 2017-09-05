@@ -13,48 +13,39 @@ import java.util.logging.Logger;
  * Created by Sukora Stas.
  */
 public class Tablet extends Observable {
-
-    private final int number;
+    final int number;
     private static Logger logger = Logger.getLogger(Tablet.class.getName());
-
 
     public Tablet(int number) {
         this.number = number;
     }
 
-
-    public Order createOrder() throws Exception {
-        Order order = null;
+    public Order createOrder() {
         try {
-            order = new Order(this);
+            Order order = new Order(this);
             ConsoleHelper.writeMessage(order.toString());
             if (!order.isEmpty()) {
-
                 setChanged();
                 notifyObservers(order);
-
-                AdvertisementManager advertisementManager = new AdvertisementManager(order.getTotalCookingTime() * 60);
-                advertisementManager.processVideos();
-
+                try {
+                    new AdvertisementManager(order.getTotalCookingTime()*60).processVideos();
+                } catch (NoVideoAvailableException e) {
+                    logger.log(Level.INFO, "No video is available for the order " + order);
+                }
             }
-        } catch (IOException e) {
+            return order;
+        }
+        catch (IOException e) {
             logger.log(Level.SEVERE, "Console is unavailable.");
             return null;
-        } catch (NoVideoAvailableException e) {
-            logger.log(Level.INFO, "No video is available for the order " + order);
         }
-        return order;
     }
-
 
     @Override
     public String toString() {
-        return "Tablet{number=" + number + "}";
-
-    }
-
-    public int getNumber() {
-        return number;
+        return "Tablet{" +
+                "number=" + number +
+                '}';
     }
 
 }

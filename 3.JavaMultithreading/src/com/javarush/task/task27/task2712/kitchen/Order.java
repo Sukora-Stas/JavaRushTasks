@@ -10,41 +10,40 @@ import java.util.List;
  * Created by Sukora Stas.
  */
 public class Order {
-    protected List<Dish> dishes;
-
     private final Tablet tablet;
-    private boolean empty;
+    protected List<Dish> dishes;
 
     public Order(Tablet tablet) throws IOException {
         this.tablet = tablet;
         this.dishes = ConsoleHelper.getAllDishesForOrder();
+//        ConsoleHelper.writeMessage(this.toString());
     }
 
-    @Override
-    public String toString() {
-        if (dishes.isEmpty()) {
-            return "";
-        } else {
-            return "Your order: " + dishes.toString() + " of " + tablet.toString();
+    public int getTotalCookingTime() {
+        int time = 0;
+        for (Dish dish : dishes) {
+            time += dish.getDuration();
         }
-
+        return time;
     }
-
 
     public boolean isEmpty() {
         return dishes.isEmpty();
     }
 
-    public int getTotalCookingTime() {
-
-        int totalTime = 0;
-
-        for (int i = 0; i < dishes.size(); i++) {
-            totalTime = dishes.get(i).getDuration() + totalTime;
-        }
-
-        return totalTime;
-
+    @Override
+    public String toString() {
+        if (dishes.isEmpty()) return "";
+        else return "Your order: "
+                + dishes.toString()
+                + " of " + tablet;
     }
 
+    public List<Dish> getDishes() {
+        return dishes;
+    }
+
+    public Tablet getTablet() {
+        return tablet;
+    }
 }
