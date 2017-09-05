@@ -24,9 +24,8 @@ public class Order {
     public String toString() {
         if (dishes.isEmpty()) {
             return "";
-        }
-        else {
-            return "Your order: " + dishes.toString() +" of "+  tablet.toString();
+        } else {
+            return "Your order: " + dishes.toString() + " of " + tablet.toString();
         }
 
     }
@@ -35,4 +34,17 @@ public class Order {
     public boolean isEmpty() {
         return dishes.isEmpty();
     }
+
+    public int getTotalCookingTime() {
+
+        int totalTime = 0;
+
+        for (int i = 0; i < dishes.size(); i++) {
+            totalTime = dishes.get(i).getDuration() + totalTime;
+        }
+
+        return totalTime;
+
+    }
+
 }
