@@ -13,6 +13,7 @@ public class Order {
     protected List<Dish> dishes;
 
     private final Tablet tablet;
+    private boolean empty;
 
     public Order(Tablet tablet) throws IOException {
         this.tablet = tablet;
@@ -31,4 +32,7 @@ public class Order {
     }
 
 
+    public boolean isEmpty() {
+        return dishes.isEmpty();
+    }
 }
