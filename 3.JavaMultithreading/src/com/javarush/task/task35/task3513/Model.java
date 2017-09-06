@@ -90,6 +90,43 @@ public class Model {
         if (isChange) addTile();
     }
 
+    void right() {
+        saveState(gameTiles);
+        rotateToRight();
+        rotateToRight();
+        left();
+        rotateToRight();
+        rotateToRight();
+    }
+    void up() {
+        saveState(gameTiles);
+        rotateToRight();
+        rotateToRight();
+        rotateToRight();
+        left();
+        rotateToRight();
+    }
+    void down() {
+        saveState(gameTiles);
+        rotateToRight();
+        left();
+        rotateToRight();
+        rotateToRight();
+        rotateToRight();
+    }
+
+    private void rotateToRight() {
+        for (int i = 0; i < FIELD_WIDTH / 2; i++) {
+            for (int j = i; j < FIELD_WIDTH - 1 - i; j++) {
+                Tile temp = gameTiles[i][j];
+                gameTiles[i][j] = gameTiles[FIELD_WIDTH - 1 - j][i];
+                gameTiles[FIELD_WIDTH - 1 - j][i] = gameTiles[FIELD_WIDTH - 1 - i][FIELD_WIDTH - 1 - j];
+                gameTiles[FIELD_WIDTH - 1 - i][FIELD_WIDTH - 1 - j] = gameTiles[j][FIELD_WIDTH - 1 - i];
+                gameTiles[j][FIELD_WIDTH - 1 - i] = temp;
+            }
+        }
+    }
+
 
     private void saveState(Tile[][] tile) {
         Tile[][] newGameTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
