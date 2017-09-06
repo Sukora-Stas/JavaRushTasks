@@ -1,4 +1,30 @@
-taskKey="com.javarush.task.task20.task2028.big01"
+taskKey="com.javarush.task.task20.task2028.big02"
+
+Построй дерево(2)
+
+Несмотря на то что наше дерево является потомком класса AbstractList, это не список в привычном понимании.
+В частности нам недоступны принимающие в качестве параметра индекс элемента.
+Такие методы необходимо переопределить и бросить новое исключение типа UnsupportedOperationException.
+
+Вот их список:
+public String get(int index)
+public String set(int index, String element)
+public void add(int index, String element)
+public String remove(int index)
+public List<String> subList(int fromIndex, int toIndex)
+protected void removeRange(int fromIndex, int toIndex)
+public boolean addAll(int index, Collection<? extends String> c)
+
+
+Требования:
+1.	При попытке вызвать метод get(int index) должно возникать исключение типа UnsupportedOperationException.
+2.	При попытке вызвать метод set(int index, String element) должно возникать исключение типа UnsupportedOperationException.
+3.	При попытке вызвать метод add(int index, String element) должно возникать исключение типа UnsupportedOperationException.
+4.	При попытке вызвать метод String remove(int index) должно возникать исключение типа UnsupportedOperationException.
+5.	При попытке вызвать метод subList(int fromIndex, int toIndex) должно возникать исключение типа UnsupportedOperationException.
+6.	При попытке вызвать метод removeRange(int fromIndex, int toIndex) должно возникать исключение типа UnsupportedOperationException.
+7.	При попытке вызвать метод addAll(int index, Collection<? extends String> c) должно возникать исключение типа UnsupportedOperationException.
+
 
 Построй дерево(1)
 
@@ -14,10 +40,5 @@ http://info.javarush.ru/uploads/images/00/04/89/2014/03/21/ee9a9b.jpg
 
 Реализацию методов get(int index) и size() пока оставь стандартной.
 
-
-Требования:
-1.	Класс CustomTree должен поддерживать интерфейс Cloneable.
-2.	Класс CustomTree должен поддерживать интерфейс Serializable.
-3.	Класс CustomTree должен быть потомком класса AbstractList.
 
 
