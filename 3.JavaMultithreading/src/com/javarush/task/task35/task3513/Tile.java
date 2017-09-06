@@ -59,4 +59,8 @@ public class Tile {
                 return new Color(0xff0000);
         }
     }
+
+    public int getValue() {
+        return value;
+    }
 }

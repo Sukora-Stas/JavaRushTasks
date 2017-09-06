@@ -131,15 +131,17 @@ public class Model {
     }
 
 
-    private void saveState(Tile[][] tile) {
-        Tile[][] newGameTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
-        for (int i = 0; i < tile.length; i++) {
-            for (int j = 0; j < tile[i].length; j++) {
-                newGameTiles[i][j] = tile[i][j];
+    // сохраняет состояние в стек
+    private void saveState(Tile[][] field) {
+        Tile[][] fieldToSave = new Tile[field.length][field[0].length];
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[0].length; j++) {
+                fieldToSave[i][j] = new Tile(field[i][j].getValue());
             }
         }
-        previousStates.push(newGameTiles);
-        previousScores.push(score);
+        previousStates.push(fieldToSave);
+        int scoreToSave = score;
+        previousScores.push(scoreToSave);
         isSaveNeeded = false;
     }
 

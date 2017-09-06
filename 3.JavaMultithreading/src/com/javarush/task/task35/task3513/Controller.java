@@ -47,7 +47,7 @@ public class Controller extends KeyAdapter {
                 model.down();
             }
             if (key.getKeyCode() == KeyEvent.VK_Z) {
-//                model.rollback();
+                model.rollback();
             }
         }
         if (model.maxTile == WINNING_TILE){
