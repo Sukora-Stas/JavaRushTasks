@@ -1,161 +1,173 @@
 package com.javarush.task.task35.task3513;
 
-import java.util.ArrayList;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Created by Sukora Stas.
  */
 public class Model {
+    private static final int FIELD_WIDTH = 4; // размер поля
+    private Tile[][] gameTiles;               // игровое поле
+    int score;                                // счет
+    int maxTile;                              // значение макимальной плитки
 
-    private static final int FIELD_WIDTH = 4;
-
-    private Tile[][] gameTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
-
-    protected int score;
-    protected int maxTile;
+    //для реализации возврата хода
+    private Stack<Integer> previousScores;
+    private Stack<Tile[][]> previousStates;
     private boolean isSaveNeeded = true;
-    private Stack previousStates = new Stack();
-    private Stack previousScores = new Stack();
 
     public Model() {
         resetGameTiles();
+        this.score = 0;
+        this.maxTile = 2;
+        this.previousScores = new Stack<Integer>();
+        this.previousStates = new Stack<Tile[][]>();
     }
-    protected void resetGameTiles() {
+
+    // вовзращает лист пустых клеток
+    private List<Tile> getEmptyTiles() {
+        List<Tile> result = new ArrayList<>();
         for (int i = 0; i < FIELD_WIDTH; i++) {
             for (int j = 0; j < FIELD_WIDTH; j++) {
-                gameTiles[i][j] = new Tile();
+                if (gameTiles[i][j].value == 0) result.add(gameTiles[i][j]);
+            }
+        }
+        return result;
+    }
+
+    // добавляет рандомно клетку 2 или 4 (соотношение 1 к 9)
+    void addTile() {
+
+        List<Tile> list = getEmptyTiles();
+        if (list != null && list.size() != 0) {
+            list.get((int) (list.size() * Math.random())).setValue(Math.random() < 0.9 ? 2 : 4);
+        }
+    }
+
+    // сброс всех клеток
+    void resetGameTiles() {
+        this.gameTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
+        for (int i = 0; i < FIELD_WIDTH; i++) {
+            for (int j = 0; j < FIELD_WIDTH; j++) {
+                this.gameTiles[i][j] = new Tile();
             }
         }
         addTile();
         addTile();
-        score = 0;
-        maxTile = 2;
     }
 
-    private ArrayList<Tile> getEmptyTiles() {
-        ArrayList<Tile> emptyTiles = new ArrayList<>();
-        for (int i = 0; i < FIELD_WIDTH; i++) {
-            for (int j = 0; j < FIELD_WIDTH; j++) {
-                if (gameTiles[i][j].isEmpty()) {
-                    emptyTiles.add(gameTiles[i][j]);
-                }
-            }
-        }
-        return emptyTiles;
-    }
-
-    private void addTile() {
-        ArrayList<Tile> emptyTiles = getEmptyTiles();
-        if (!emptyTiles.isEmpty()) {
-            int randomTileIndex = (int) (Math.random() * emptyTiles.size());
-            emptyTiles.get(randomTileIndex).value = (Math.random() < 0.9) ? 2 : 4;
-        }
-    }
-
+    // сжатие одного ряда влево
     private boolean compressTiles(Tile[] tiles) {
-        boolean isCompressed = false;
-        for (int i = 0; i < tiles.length - 1; i++) {
-            for (int j = 0; j < tiles.length - 1; j++) {
-                if (tiles[j].isEmpty() && !tiles[j + 1].isEmpty()) {
+        boolean isChanged = false;
+        Tile temp;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (tiles[j].getValue() == 0 && tiles[j + 1].getValue() != 0) {
+                    temp = tiles[j];
                     tiles[j] = tiles[j + 1];
-                    tiles[j + 1] = new Tile();
-                    isCompressed = true;
+                    tiles[j + 1] = temp;
+                    isChanged = true;
                 }
             }
         }
-        return isCompressed;
-    }
-    private boolean mergeTiles(Tile[] tiles) {  //Слияние плиток одного номинала
-        boolean isMerges = false;
-        for (int j = 0; j < tiles.length - 1; j++) {
-            if (tiles[j].value == tiles[j + 1].value && !tiles[j].isEmpty() && !tiles[j + 1].isEmpty()) {
-                tiles[j].value = tiles[j].value * 2;
-                isMerges = true;
-                score += tiles[j].value;
-                maxTile = maxTile > tiles[j].value ? maxTile : tiles[j].value;
-                tiles[j + 1] = new Tile();
-                compressTiles(tiles);
-            }
-        }
-        return isMerges;
+        return isChanged;
     }
 
-    void left() {
-        if (isSaveNeeded){saveState(gameTiles);}
-        boolean isChange = false;
+    // сложение клеток
+    private boolean mergeTiles(Tile[] tiles) {
+        boolean isChanged = false;
+        for (int j = 0; j < 3; j++) {
+            if (tiles[j].getValue() != 0 && tiles[j].getValue() == tiles[j + 1].getValue()) {
+                tiles[j].setValue(tiles[j].getValue() * 2);
+                tiles[j + 1].setValue(0);
+                if (tiles[j].getValue() > maxTile) maxTile = tiles[j].getValue();
+                score += tiles[j].getValue();
+                isChanged = true;
+
+            }
+        }
+
+        if (isChanged) {
+            Tile temp;
+            for (int j = 0; j < 3; j++) {
+                if (tiles[j].getValue() == 0 && tiles[j + 1].getValue() != 0) {
+                    temp = tiles[j];
+                    tiles[j] = tiles[j + 1];
+                    tiles[j + 1] = temp;
+                }
+            }
+        }
+
+        return isChanged;
+    }
+
+    // методы для сдвига в четырех направлениях
+    public void left() {
+        if (isSaveNeeded) saveState(this.gameTiles);
+        boolean isChanged = false;
         for (int i = 0; i < FIELD_WIDTH; i++) {
             if (compressTiles(gameTiles[i]) | mergeTiles(gameTiles[i])) {
-                isChange = true;
+                isChanged = true;
             }
         }
-        isSaveNeeded = true;
-        if (isChange) addTile();
+        if (isChanged) {
+            addTile();
+            isSaveNeeded = true;
+        }
+
+
     }
 
-    void right() {
-        saveState(gameTiles);
-        rotateToRight();
-        rotateToRight();
+    public void up() {
+        saveState(this.gameTiles);
+        rotate();
         left();
-        rotateToRight();
-        rotateToRight();
-    }
-    void up() {
-        saveState(gameTiles);
-        rotateToRight();
-        rotateToRight();
-        rotateToRight();
-        left();
-        rotateToRight();
-    }
-    void down() {
-        saveState(gameTiles);
-        rotateToRight();
-        left();
-        rotateToRight();
-        rotateToRight();
-        rotateToRight();
+        rotate();
+        rotate();
+        rotate();
     }
 
-    private void rotateToRight() {
-        for (int i = 0; i < FIELD_WIDTH / 2; i++) {
-            for (int j = i; j < FIELD_WIDTH - 1 - i; j++) {
-                Tile temp = gameTiles[i][j];
-                gameTiles[i][j] = gameTiles[FIELD_WIDTH - 1 - j][i];
-                gameTiles[FIELD_WIDTH - 1 - j][i] = gameTiles[FIELD_WIDTH - 1 - i][FIELD_WIDTH - 1 - j];
-                gameTiles[FIELD_WIDTH - 1 - i][FIELD_WIDTH - 1 - j] = gameTiles[j][FIELD_WIDTH - 1 - i];
-                gameTiles[j][FIELD_WIDTH - 1 - i] = temp;
+    public void right() {
+        saveState(this.gameTiles);
+        rotate();
+        rotate();
+        left();
+        rotate();
+        rotate();
+    }
+
+    public void down() {
+        saveState(this.gameTiles);
+        rotate();
+        rotate();
+        rotate();
+        left();
+        rotate();
+    }
+
+    // поворот матрицы на 90 градусов против часовой стрелки
+    private void rotate() {
+        int len = FIELD_WIDTH;
+        for (int k = 0; k < len / 2; k++) // border -> center
+        {
+            for (int j = k; j < len - 1 - k; j++) // left -> right
+            {
+
+                Tile tmp = gameTiles[k][j];
+                gameTiles[k][j] = gameTiles[j][len - 1 - k];
+                gameTiles[j][len - 1 - k] = gameTiles[len - 1 - k][len - 1 - j];
+                gameTiles[len - 1 - k][len - 1 - j] = gameTiles[len - 1 - j][k];
+                gameTiles[len - 1 - j][k] = tmp;
             }
         }
     }
 
-
-    // сохраняет состояние в стек
-    private void saveState(Tile[][] field) {
-        Tile[][] fieldToSave = new Tile[field.length][field[0].length];
-        for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[0].length; j++) {
-                fieldToSave[i][j] = new Tile(field[i][j].getValue());
-            }
-        }
-        previousStates.push(fieldToSave);
-        int scoreToSave = score;
-        previousScores.push(scoreToSave);
-        isSaveNeeded = false;
+    // геттер для поля
+    public Tile[][] getGameTiles() {
+        return gameTiles;
     }
 
-    public void rollback() {
-        if (!previousStates.isEmpty()) {
-            gameTiles = (Tile[][]) previousStates.pop();
-        }
-        if (!previousScores.isEmpty()) {
-            score = (int) previousScores.pop();
-        }
-    }
-
-
-
+    // проверка возможности хода
     public boolean canMove() {
         if (!getEmptyTiles().isEmpty())
             return true;
@@ -172,6 +184,28 @@ public class Model {
             }
         }
         return false;
+    }
+
+    // сохраняет состояние в стек
+    private void saveState(Tile[][] field) {
+        Tile[][] fieldToSave = new Tile[field.length][field[0].length];
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[0].length; j++) {
+                fieldToSave[i][j] = new Tile(field[i][j].getValue());
+            }
+        }
+        previousStates.push(fieldToSave);
+        int scoreToSave = score;
+        previousScores.push(scoreToSave);
+        isSaveNeeded = false;
+    }
+
+    // откат на один ход назад
+    public void rollback() {
+        if (!previousStates.isEmpty() && !previousScores.isEmpty()) {
+            this.score = previousScores.pop();
+            this.gameTiles = previousStates.pop();
+        }
     }
 
     // делает ход в случайном направлении
@@ -192,7 +226,40 @@ public class Model {
         }
     }
 
-    public Tile[][] getGameTiles() {
-        return gameTiles;
+    // проверка измененя поля
+    private boolean hasBoardChanged() {
+        boolean result = false;
+        int sumNow = 0;
+        int sumPrevious = 0;
+        Tile[][] tmp = previousStates.peek();
+        for (int i = 0; i < gameTiles.length; i++) {
+            for (int j = 0; j < gameTiles[0].length; j++) {
+                sumNow += gameTiles[i][j].getValue();
+                sumPrevious += tmp[i][j].getValue();
+            }
+        }
+        return sumNow != sumPrevious;
+    }
+
+    // проверка эффективности хода
+    private MoveEfficiency getMoveEfficiency(Move move) {
+        MoveEfficiency moveEfficiency;
+        move.move();
+        if (hasBoardChanged()) moveEfficiency = new MoveEfficiency(getEmptyTiles().size(), score, move);
+        else moveEfficiency = new MoveEfficiency(-1, 0, move);
+        rollback();
+
+        return moveEfficiency;
+    }
+
+    // реализация выбора эффективного хода из возможных
+    public void autoMove() {
+        PriorityQueue<MoveEfficiency> queue = new PriorityQueue(4, Collections.reverseOrder());
+        queue.add(getMoveEfficiency(this::left));
+        queue.add(getMoveEfficiency(this::right));
+        queue.add(getMoveEfficiency(this::up));
+        queue.add(getMoveEfficiency(this::down));
+        Move move = queue.peek().getMove();
+        move.move();
     }
 }
