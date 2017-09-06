@@ -140,6 +140,8 @@ public class Model {
         isSaveNeeded = false;
     }
 
+
+
     public boolean canMove() {
         if (!getEmptyTiles().isEmpty())
             return true;
