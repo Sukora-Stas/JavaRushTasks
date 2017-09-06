@@ -1,6 +1,7 @@
 package com.javarush.task.task35.task3513;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * Created by Sukora Stas.
@@ -14,6 +15,8 @@ public class Model {
     protected int score;
     protected int maxTile;
     private boolean isSaveNeeded = true;
+    private Stack previousStates = new Stack();
+    private Stack previousScores = new Stack();
 
     public Model() {
         resetGameTiles();
@@ -135,9 +138,18 @@ public class Model {
                 newGameTiles[i][j] = tile[i][j];
             }
         }
-//        previousStates.push(newGameTiles);
-//        previousScores.push(score);
+        previousStates.push(newGameTiles);
+        previousScores.push(score);
         isSaveNeeded = false;
+    }
+
+    public void rollback() {
+        if (!previousStates.isEmpty()) {
+            gameTiles = (Tile[][]) previousStates.pop();
+        }
+        if (!previousScores.isEmpty()) {
+            score = (int) previousScores.pop();
+        }
     }
 
 
