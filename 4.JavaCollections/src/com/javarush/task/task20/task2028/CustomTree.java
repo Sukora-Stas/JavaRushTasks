@@ -9,6 +9,9 @@ import java.util.List;
 Построй дерево(1)
 */
 public class CustomTree extends AbstractList<String> implements Cloneable, Serializable {
+
+    Entry<String> root;
+
     public static void main(String[] args) {
         List<String> list = new CustomTree();
         for (int i = 1; i < 16; i++) {
@@ -18,6 +21,31 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
         list.remove("5");
         //System.out.println("Expected null, actual is " + ((CustomTree) list).getParent("11"));
     }
+
+    static class Entry<T> implements Serializable {
+        String elementName;
+        int lineNumber;
+        boolean availableToAddLeftChildren, availableToAddRightChildren;
+        Entry<T> parent, leftChild, rightChild;
+
+        public Entry(String elementName) {
+            this.elementName = elementName;
+            availableToAddLeftChildren = true;
+            availableToAddRightChildren = true;
+        }
+
+        void checkChildren() {
+            if (leftChild != null)
+                availableToAddLeftChildren = false;
+            if (rightChild != null)
+                availableToAddRightChildren = false;
+        }
+
+        boolean isAvailableToAddChildren() {
+            return availableToAddLeftChildren || availableToAddRightChildren;
+        }
+    }
+
 
     @Override
     public String get(int index) {
