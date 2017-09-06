@@ -63,6 +63,7 @@ public class Controller extends KeyAdapter {
         return model.score;
     }
 
-
-
+    public View getView() {
+        return view;
+    }
 }
