@@ -11,6 +11,9 @@ public class Model {
 
     private Tile[][] gameTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
 
+    protected int score;
+    protected int maxTile;
+
     public Model() {
         resetGameTiles();
     }
@@ -22,6 +25,8 @@ public class Model {
         }
         addTile();
         addTile();
+        score = 0;
+        maxTile = 2;
     }
 
     private ArrayList<Tile> getEmptyTiles() {
@@ -42,6 +47,34 @@ public class Model {
             int randomTileIndex = (int) (Math.random() * emptyTiles.size());
             emptyTiles.get(randomTileIndex).value = (Math.random() < 0.9) ? 2 : 4;
         }
+    }
+
+    private boolean compressTiles(Tile[] tiles) {
+        boolean isCompressed = false;
+        for (int i = 0; i < tiles.length - 1; i++) {
+            for (int j = 0; j < tiles.length - 1; j++) {
+                if (tiles[j].isEmpty() && !tiles[j + 1].isEmpty()) {
+                    tiles[j] = tiles[j + 1];
+                    tiles[j + 1] = new Tile();
+                    isCompressed = true;
+                }
+            }
+        }
+        return isCompressed;
+    }
+    private boolean mergeTiles(Tile[] tiles) {  //Слияние плиток одного номинала
+        boolean isMerges = false;
+        for (int j = 0; j < tiles.length - 1; j++) {
+            if (tiles[j].value == tiles[j + 1].value && !tiles[j].isEmpty() && !tiles[j + 1].isEmpty()) {
+                tiles[j].value = tiles[j].value * 2;
+                isMerges = true;
+                score += tiles[j].value;
+                maxTile = maxTile > tiles[j].value ? maxTile : tiles[j].value;
+                tiles[j + 1] = new Tile();
+                compressTiles(tiles);
+            }
+        }
+        return isMerges;
     }
 
 }
