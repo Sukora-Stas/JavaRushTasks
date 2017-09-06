@@ -13,6 +13,7 @@ public class Model {
 
     protected int score;
     protected int maxTile;
+    private boolean isSaveNeeded = true;
 
     public Model() {
         resetGameTiles();
@@ -76,5 +77,31 @@ public class Model {
         }
         return isMerges;
     }
+
+    void left() {
+        if (isSaveNeeded){saveState(gameTiles);}
+        boolean isChange = false;
+        for (int i = 0; i < FIELD_WIDTH; i++) {
+            if (compressTiles(gameTiles[i]) | mergeTiles(gameTiles[i])) {
+                isChange = true;
+            }
+        }
+        isSaveNeeded = true;
+        if (isChange) addTile();
+    }
+
+
+    private void saveState(Tile[][] tile) {
+        Tile[][] newGameTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
+        for (int i = 0; i < tile.length; i++) {
+            for (int j = 0; j < tile[i].length; j++) {
+                newGameTiles[i][j] = tile[i][j];
+            }
+        }
+//        previousStates.push(newGameTiles);
+//        previousScores.push(score);
+        isSaveNeeded = false;
+    }
+
 
 }
