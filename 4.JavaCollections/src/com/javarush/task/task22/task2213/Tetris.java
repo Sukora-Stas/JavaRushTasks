@@ -9,8 +9,11 @@ public class Tetris {
     private Field field;
     private Figure figure;
 
-    public static void main(String[] args) {
+    static Tetris game;
 
+    public static void main(String[] args) {
+        game = new Tetris();
+        game.run();
     }
 
     public void run() {
