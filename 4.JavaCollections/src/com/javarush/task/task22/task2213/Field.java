@@ -16,7 +16,15 @@ public class Field {
     }
 
     public void print() {
+        //Создаем массив, куда будем "рисовать" текущее состояние игры
+        int[][] canvas = new int[height][width];
 
+        //Копируем "матрицу поля" в массив
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                canvas[i][j] = matrix[i][j];
+            }
+        }
     }
 
     public void removeFullLines() {
