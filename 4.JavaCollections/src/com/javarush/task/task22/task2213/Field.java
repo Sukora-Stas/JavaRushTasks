@@ -25,6 +25,21 @@ public class Field {
                 canvas[i][j] = matrix[i][j];
             }
         }
+
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (matrix[i][j] == 0)
+                    System.out.print(".");
+                else
+                    System.out.print("X");
+            }
+            System.out.println();
+        }
+
+        System.out.println();
+        System.out.println();
+
     }
 
     public void removeFullLines() {
