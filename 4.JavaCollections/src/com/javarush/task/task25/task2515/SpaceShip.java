@@ -1,22 +1,35 @@
 package com.javarush.task.task25.task2515;
 
 /**
- * Created by Sukora Stas.
+ * Класс для космического корабля
  */
 public class SpaceShip extends BaseObject {
-
-
-    public SpaceShip(double x, double y) {
-        super(x, y, 3);
-    }
+    //картинка корабля для отрисовки
+    private static int[][] matrix = {
+            {0, 0, 0, 0, 0},
+            {0, 0, 1, 0, 0},
+            {0, 0, 1, 0, 0},
+            {1, 0, 1, 0, 1},
+            {1, 1, 1, 1, 1},
+    };
 
     //вектор движения (-1 влево,+1 вправо)
     private double dx = 0;
 
+    public SpaceShip(int x, int y) {
+        super(x, y, 3);
+    }
+
+    /**
+     * Устанавливаем вектор движения влево
+     */
     public void moveLeft() {
         dx = -1;
     }
 
+    /**
+     * Устанавливаем вектор движения вправо
+     */
     public void moveRight() {
         dx = 1;
     }
@@ -26,7 +39,7 @@ public class SpaceShip extends BaseObject {
      */
     @Override
     public void draw(Canvas canvas) {
-
+        canvas.drawMatrix(x - radius + 1, y - radius + 1, matrix, 'M');
     }
 
     /**
@@ -35,7 +48,7 @@ public class SpaceShip extends BaseObject {
      */
     @Override
     public void move() {
-        x += dx;
+        x = x + dx;
 
         checkBorders(radius, Space.game.getWidth() - radius + 1, 1, Space.game.getHeight() + 1);
     }
@@ -48,5 +61,4 @@ public class SpaceShip extends BaseObject {
         Space.game.getRockets().add(new Rocket(x - 2, y));
         Space.game.getRockets().add(new Rocket(x + 2, y));
     }
-
 }
