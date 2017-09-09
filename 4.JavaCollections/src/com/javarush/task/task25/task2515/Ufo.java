@@ -1,10 +1,9 @@
 package com.javarush.task.task25.task2515;
 
 /**
- * Created by Sukora Stas.
+ * Класс для НЛО
  */
 public class Ufo extends BaseObject {
-
     //картинка для отрисовки
     private static int[][] matrix = {
             {0, 0, 0, 0, 0},
