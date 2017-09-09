@@ -15,6 +15,8 @@ public class Space {
     private ArrayList<Rocket> rockets = new ArrayList<>();
     private ArrayList<Bomb> bombs = new ArrayList<>();
 
+    public static Space game;
+
     public static void main(String[] args) {
 
     }
@@ -32,7 +34,7 @@ public class Space {
 
     }
 
-    public void sleep(int ms){
+    public void sleep(int ms) {
 
     }
 
