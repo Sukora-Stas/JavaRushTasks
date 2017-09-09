@@ -1,7 +1,7 @@
 package com.javarush.task.task25.task2515;
 
 /**
- * Класс для космического корабля
+ * Created by Sukora Stas.
  */
 public class SpaceShip extends BaseObject {
     //картинка корабля для отрисовки
@@ -48,7 +48,7 @@ public class SpaceShip extends BaseObject {
      */
     @Override
     public void move() {
-        x = x + dx;
+        x += dx;
 
         checkBorders(radius, Space.game.getWidth() - radius + 1, 1, Space.game.getHeight() + 1);
     }

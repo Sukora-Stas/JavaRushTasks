@@ -1,7 +1,7 @@
 package com.javarush.task.task25.task2515;
 
 /**
- * Базовый класс для всех объектов игры.
+ * Created by Sukora Stas.
  */
 public abstract class BaseObject {
     //координаты
