@@ -21,7 +21,7 @@ public class AmigoSet<E> extends AbstractSet<E> implements Set<E>, Cloneable, Se
 
 
     public AmigoSet(Collection<? extends E> collection){
-        map = new HashMap<>((int)Math.max(16,collection.size()/.75f));
+        map = new HashMap<>(Math.max((int) ((int)collection.size() / .75f) + 1, 16));
         addAll(collection);
     }
 
