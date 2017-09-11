@@ -1,4 +1,24 @@
-taskKey="com.javarush.task.task33.task3310.big04"
+taskKey="com.javarush.task.task33.task3310.big05"
+
+Shortener (5)
+
+Давай напишем наше первое хранилище (стратегию хранилища). Внутри оно будет
+содержать обычный HashMap. Все стратегии будем хранить в пакете strategy.
+5.1. Создай класс HashMapStorageStrategy, реализующий интерфейс StorageStrategy.
+5.2. Добавь в класс поле HashMap<Long, String> data. В нем будут храниться наши данные.
+5.3. Реализуй в классе все необходимые методы. Реализации методов должны
+использовать поле data. Дополнительные поля не создавать.
+
+
+Требования:
+1.	Класс HashMapStorageStrategy должен поддерживать интерфейс StorageStrategy.
+2.	В классе HashMapStorageStrategy должно быть создано поле data типа HashMap.
+3.	В классе HashMapStorageStrategy должен быть корректно реализован метод containsKey.
+4.	В классе HashMapStorageStrategy должен быть корректно реализован метод containsValue.
+5.	В классе HashMapStorageStrategy должен быть корректно реализован метод put.
+6.	В классе HashMapStorageStrategy должен быть корректно реализован метод getValue.
+7.	В классе HashMapStorageStrategy должен быть корректно реализован метод getKey.
+
 
 Shortener (4)
 
@@ -14,11 +34,6 @@ SecureRandom и BigInteger. Подсказка: гугли запрос "random 
 4.2.1.	Добавь в него статический метод log(Exception e), который будет выводить
 краткое описание исключения.
 
-
-Требования:
-1.	Метод generateRandomString класса Helper должен генерировать случайную строку используя способ описанный в условии задачи.
-2.	Метод printMessage класса Helper должен выводить переданный текст на экран.
-3.	Метод log класса ExceptionHandler должен выводить на экран краткое описание исключения.
 
 
 Shortener (3)
