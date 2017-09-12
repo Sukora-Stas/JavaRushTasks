@@ -11,5 +11,6 @@
     <orderEntry type="library" exported="" name="com.fasterxml.jackson.core:jackson-core:2.9.0.pr2" level="project" />
     <orderEntry type="library" exported="" name="com.fasterxml.jackson.core:jackson-databind:2.9.0.pr2" level="project" />
     <orderEntry type="library" name="org.slf4j:slf4j-api:1.7.23" level="application" />
+    <orderEntry type="library" name="com.google.guava:guava:19.0" level="project" />
   </component>
 </module>
