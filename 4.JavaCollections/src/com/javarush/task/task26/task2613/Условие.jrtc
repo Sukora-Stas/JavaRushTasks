@@ -1,4 +1,35 @@
-taskKey="com.javarush.task.task26.task2613.big02"
+taskKey="com.javarush.task.task26.task2613.big03"
+
+CashMachine (3)
+
+1. Создай класс CurrencyManipulator, который будет хранить всю информацию про выбранную валюту.
+Класс должен содержать:
+1.1 String currencyCode - код валюты, например, USD. Состоит из трех букв.
+1.2 Map<Integer, Integer> denominations - это Map<номинал, количество>.
+Чтобы можно было посмотреть, к какой валюте относится манипулятор, добавим геттер для currencyCode.
+Очевидно, что манипулятор никак не может функционировать без названия валюты,
+поэтому добавим конструктор с этим параметром и проинициализируем currencyCode.
+
+2. Валют может быть несколько, поэтому нам понадобится фабрика, которая будет создавать и хранить манипуляторы.
+Создай класс CurrencyManipulatorFactory со статическим методом getManipulatorByCurrencyCode(String currencyCode).
+В этом методе будем создавать нужный манипулятор, если он еще не существует, либо возвращать ранее созданный.
+Регистр при поиске манипулятора валюты не должен учитываться.
+Подумай, где лучше хранить все манипуляторы? Маленькая подсказка, поле должно называться map.
+
+Сделайте так, чтобы невозможно было создавать объекты CurrencyManipulatorFactory класса.
+
+
+Требования:
+1.	Класс CurrencyManipulator должен быть создан в отдельном файле.
+2.	Класс CurrencyManipulator должен содержать приватное поле String currencyCode.
+3.	Класс CurrencyManipulator должен содержать приватное поле Map<Integer, Integer> denominations.
+4.	Класс CurrencyManipulator должен содержать геттер для поля currencyCode.
+5.	Класс CurrencyManipulator должен содержать конструктор с одним параметром, инициализирующий поле currencyCode.
+6.	Класс CurrencyManipulatorFactory должен быть создан в отдельном файле.
+7.	Класс CurrencyManipulatorFactory должен иметь приватный дефолтный конструктор.
+8.	Класс CurrencyManipulatorFactory должен содержать приватное статическое поле Map<String, CurrencyManipulator> map.
+9.	Класс CurrencyManipulatorFactory должен иметь статический метод getManipulatorByCurrencyCode(String currencyCode).
+
 
 CashMachine (2)
 
@@ -12,13 +43,6 @@ CashMachine (2)
 2.1 InterruptOperationException будем кидать, когда нужно прервать текущую операцию и выйти из приложения.
 2.2 NotEnoughMoneyException будем кидать, когда не сможем выдать запрашиваемую сумму.
 
-
-Требования:
-1.	Класс InterruptOperationException должен быть создан в отдельном файле, и быть checked исключением.
-2.	Класс NotEnoughMoneyException должен быть создан в отдельном файле, и быть checked исключением.
-3.	Класс ConsoleHelper должен содержать приватное статическое поле BufferedReader bis, которое должно быть сразу проинициализировано.
-4.	Класс ConsoleHelper должен содержать публичный статический метод writeMessage(String message), который должен выводить в консоль переданный параметр.
-5.	Класс ConsoleHelper должен содержать публичный статический метод readString(), который должен считывать с консоли строку и возвращать ее.
 
 
 CashMachine (1)
