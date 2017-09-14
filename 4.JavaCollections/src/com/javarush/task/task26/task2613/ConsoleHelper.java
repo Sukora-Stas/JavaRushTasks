@@ -3,91 +3,94 @@ package com.javarush.task.task26.task2613;
 import com.javarush.task.task26.task2613.exception.InterruptOperationException;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ResourceBundle;
 
 /**
  * Created by Sukora Stas.
  */
 public class ConsoleHelper {
-    private static BufferedReader bis = new BufferedReader(new InputStreamReader(System.in));
+    private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private static ResourceBundle res = ResourceBundle.getBundle(CashMachine.RESOURCE_PATH + "common_en");
 
     public static void writeMessage(String message) {
         System.out.println(message);
     }
 
     public static String readString() throws InterruptOperationException {
-//        String line = bis.readLine();
-//        return line;
-        String message = null;
-        try {
-            message = bis.readLine();
-        } catch (Exception e) {
-        }
-        if (message != null)
-        {
-            if ("EXIT".equals(message.toUpperCase()))
-            {
-                throw new InterruptOperationException();
-            }
-        }
-        return message;
+        String line = "";
 
+        try {
+            line = reader.readLine();
+            if (res.getString("operation.EXIT").equalsIgnoreCase(line)) throw new InterruptOperationException();
+        } catch (IOException e) {}
+
+        return line;
     }
 
     public static String askCurrencyCode() throws InterruptOperationException {
-        String code = null;
-        writeMessage("Please choice currency code:");
+        writeMessage(res.getString("choose.currency.code"));
+        String currency = "";
         while (true) {
-            code = readString();
-            if (code.length() == 3)
+            currency = readString();
+            if (currency.length() == 3)
                 break;
             else
-                writeMessage("Error, Please choice again:");
-
+                writeMessage(res.getString("invalid.data"));
         }
-        return code.toUpperCase();
+        return currency.toUpperCase();
     }
 
     public static String[] getValidTwoDigits(String currencyCode) throws InterruptOperationException {
-        writeMessage("Input nominal and total:");
-
-        String[] input;
+        writeMessage(String.format(res.getString("choose.denomination.and.count.format"), currencyCode));
+        String[] array;
         while (true) {
-            input = readString().split(" ");
-
-            int nominal = 0;
-            int total = 0;
-            try {
-                nominal = Integer.parseInt(input[0]);
-                total = Integer.parseInt(input[1]);
-            } catch (Exception e) {
-                writeMessage("Error, Repeat again:");
+            array = readString().split(" ");
+            if (array.length != 2) {
+                writeMessage(res.getString("invalid.data"));
                 continue;
             }
-            if (nominal <= 0 || total <= 0) {
-                writeMessage("Error, Repeat again:");
+            int i1, i2;
+            try {
+                i1 = Integer.parseInt(array[0]);
+                i2 = Integer.parseInt(array[1]);
+            } catch (NumberFormatException e)
+            {
+                writeMessage(res.getString("invalid.data"));
+                continue;
+            }
+            if (i1 <= 0 || i2 <= 0) {
+                writeMessage(res.getString("invalid.data"));
                 continue;
             }
             break;
         }
-        return input;
-
+        return array;
     }
 
-    public static Operation askOperation() throws InterruptOperationException
-    {
-        while (true)
-        {
-            try
-            {
-                writeMessage("Choice operation:\n1) INFO\n2) DEPOSIT\n3) WITHDRAW\n4) EXIT");
-                return Operation.getAllowableOperationByOrdinal(Integer.valueOf(readString()));
+    public static Operation askOperation() throws InterruptOperationException {
+        writeMessage(res.getString("choose.operation"));
+        Integer numOperation;
+        while (true) {
+            String line = readString();
+            try {
+                numOperation = Integer.parseInt(line);
+            } catch (NumberFormatException e) {
+                writeMessage(res.getString("invalid.data"));
+                continue;
             }
-            catch (IllegalArgumentException e)
-            {
-                System.out.println("Incorrect operation");
+
+            if (numOperation < 1 || numOperation > 4) {
+                writeMessage(res.getString("invalid.data"));
+                continue;
             }
+            break;
         }
+        return Operation.getAllowableOperationByOrdinal(numOperation);
     }
 
+    public static void printExitMessage() {
+        ConsoleHelper.writeMessage(res.getString("the.end"));
+    }
 }

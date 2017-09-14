@@ -1,4 +1,26 @@
-taskKey="com.javarush.task.task26.task2613.big13"
+taskKey="com.javarush.task.task26.task2613.big14"
+
+CashMachine (14)
+
+1. В LoginCommand, WithdrawCommand добавь поле private ResourceBundle res, которое инициализируй соответствующим ресурсом.
+Для LoginCommand ресурс login_en.properties.
+Для WithdrawCommand ресурс withdraw_en.properties.
+
+2. Для ресурса common_en.properties замени все строки в ConsoleHelper.
+Для этого создай приватное статическое поле ResourceBundle res в классе ConsoleHelper и инициализируй соответствующим ресурсом.
+Важно: путь к ресурсам строй динамически, для этого используй у класса CashMachine метод getPackage()
+
+
+
+Требования:
+1.	LoginCommand должен содержать приватное поле ResourceBundle res.
+2.	WithdrawCommand должен содержать приватное поле ResourceBundle res.
+3.	ConsoleHelper должен содержать приватное статическое поле ResourceBundle res.
+4.	Поле res класса LoginCommand должно быть проинициализировано из файла login_en.properties.
+5.	Поле res класса WithdrawCommand должно быть проинициализировано из файла withdraw_en.properties.
+6.	Поле res класса ConsoleHelper должно быть проинициализировано из файла common_en.properties.
+7.	В методе execute() классов LoginCommand, WithdrawCommand используй вызовы соответствующих новых ресурсов.
+
 
 CashMachine (13)
 
@@ -13,15 +35,6 @@ CashMachine (13)
 2. Для каждого нового ресурса замени все строки в соответствующей команде.
 
 
-
-Требования:
-1.	DepositCommand должен содержать приватное поле ResourceBundle res.
-2.	ExitCommand должен содержать приватное поле ResourceBundle res.
-3.	InfoCommand должен содержать приватное поле ResourceBundle res.
-4.	Поле res класса DepositCommand должно быть проинициализировано из файла deposit_en.properties.
-5.	Поле res класса ExitCommand должно быть проинициализировано из файла exit_en.properties.
-6.	Поле res класса InfoCommand должно быть проинициализировано из файла info_en.properties.
-7.	В методе execute() классов DepositCommand, ExitCommand, InfoCommand используй подходящие ресурсы.
 
 
 CashMachine (12)
@@ -136,35 +149,6 @@ CashMachine (9)
 
 3. Заверни тело метода main в try-catch и обработай исключение InterruptOperationException.
 Попрощайся с пользователем в блоке catch используя ConsoleHelper.
-
-
-
-CashMachine (8)
-
-Пора привести в порядок наш main, уж очень там всего много, чего не должно быть.
-
-1. Перенеси логику из main в DepositCommand и InfoCommand.
-Проверим, что там стало с main? Цикл, в котором спрашиваем операцию у пользователя, а потом вызываем метод у CommandExecutor.
-И так до бесконечности... надо бы придумать условие выхода из цикла.
-Исправь цикл, чтоб он стал do-while. Условие выхода - операция EXIT.
-
-2. Давай запустим прогу и пополним счет на EUR 100 2 и USD 20 6, и посмотрим на INFO.
-Ничего не понятно, т.к. создались 2 манипулятора: первый для EUR, второй для USD.
-Давай улучшим логику InfoCommand. Надо вывести баланс по каждому манипулятору.
-
-2.1. В классе CurrencyManipulatorFactory создай статический метод getAllCurrencyManipulators(), который вернет Collection всех манипуляторов.
-У тебя все манипуляторы хранятся в карте, не так ли? Если нет, то отрефактори.
-2.2. В InfoCommand в цикле выведите [код валюты - общая сумма денег для выбранной валюты].
-Запустим прогу и пополним счет на EUR 100 2 и USD 20 6, и посмотрим на INFO.
-Все работает правильно?
-EUR - 200
-USD - 120
-Отлично!
-
-3. Запустим прогу и сразу первой операцией попросим INFO. Ничего не вывело? Непорядок.
-Добавь в манипулятор метод boolean hasMoney(), который будет показывать, добавлены ли какие-то банкноты или нет.
-
-4. В InfoCommand используй метод п.3. и выведите фразу "No money available.", если нет денег в банкомате.
 
 
 
