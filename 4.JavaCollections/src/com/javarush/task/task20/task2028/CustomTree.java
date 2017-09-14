@@ -25,6 +25,31 @@ public class CustomTree extends AbstractList implements Cloneable, Serializable 
         throw new UnsupportedOperationException();
     }
 
+    public boolean add(String s) {
+        if (this.isEmpty()) {
+            root = new Entry<>(s);
+            root.checkChildren();
+            return true;
+        } else {
+            Entry<String> entry = root;
+            entry.checkChildren();
+            if (entry.isAvailableToAddChildren()) {
+
+            }
+        }
+
+
+        return false;
+    }
+
+    public void remove(String s) {
+
+    }
+
+    public String getParent(String s) {
+        return  null;
+    }
+
     @Override
     public int size() {
         return 0;

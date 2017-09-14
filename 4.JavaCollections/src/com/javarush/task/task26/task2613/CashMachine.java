@@ -10,12 +10,9 @@ import java.util.Locale;
  */
 public class CashMachine {
     public static void main(String[] args) throws InterruptOperationException {
-
-
-
+        Locale.setDefault(Locale.ENGLISH);
 
         try {
-            Locale.setDefault(Locale.ENGLISH);
             Operation operation;
             do {
                 operation = ConsoleHelper.askOperation();
@@ -24,6 +21,11 @@ public class CashMachine {
             } while (operation != Operation.EXIT);
 
         } catch (InterruptOperationException e) {
+            try {
+                CommandExecutor.execute(Operation.EXIT);
+            } catch (InterruptOperationException ignored) {
+
+            }
             ConsoleHelper.writeMessage("Operation was terminated! Bye...");
         }
     }
