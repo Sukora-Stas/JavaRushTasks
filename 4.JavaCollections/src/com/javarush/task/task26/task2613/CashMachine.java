@@ -9,7 +9,7 @@ import java.util.Locale;
  * Created by Sukora Stas.
  */
 public class CashMachine {
-    public static void main(String[] args) throws InterruptOperationException {
+    public static void main(String[] args) {
         Locale.setDefault(Locale.ENGLISH);
 
         try {
