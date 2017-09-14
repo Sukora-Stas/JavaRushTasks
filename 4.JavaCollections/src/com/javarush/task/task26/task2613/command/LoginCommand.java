@@ -1,40 +1,46 @@
 package com.javarush.task.task26.task2613.command;
 
+import com.javarush.task.task26.task2613.CashMachine;
 import com.javarush.task.task26.task2613.ConsoleHelper;
 import com.javarush.task.task26.task2613.exception.InterruptOperationException;
+
+import java.util.Enumeration;
+import java.util.ResourceBundle;
 
 /**
  * Created by Sukora Stas.
  */
-class LoginCommand implements Command
-{
-    private final String creditCardNumber = "123456789012";
-    private final String pin = "1234";
+class LoginCommand implements Command {
+    private ResourceBundle validCreditCards = ResourceBundle.getBundle(CashMachine.RESOURCE_PATH + "verifiedCards");
 
     @Override
     public void execute() throws InterruptOperationException {
-        String userCreditCardNumber = "";
-        String userPin = "";
-        while (!userCreditCardNumber.equals(creditCardNumber)
-                && !userPin.equals(pin)){
-            ConsoleHelper.writeMessage("Enter credit card number (12 digits) and pin (4 digits)");
-            userCreditCardNumber = ConsoleHelper.readString();
-            userPin = ConsoleHelper.readString();
-            if (!userCreditCardNumber.matches("^[0-9]{12}$")){
-                ConsoleHelper.writeMessage("Wrong card info");
-                continue;
-            }
-            if(!userPin.matches("^[0-9]{4}$")){
-                ConsoleHelper.writeMessage("Wrong card info");
-                continue;
-            }
-            if (userCreditCardNumber.equals(creditCardNumber) && userPin.equals(pin)){
-                ConsoleHelper.writeMessage("Access accepted");
-            }
-            else {
-                ConsoleHelper.writeMessage("Access denied");
+        Enumeration<String> cardNumbers = validCreditCards.getKeys();
+
+        while (true) {
+            System.out.println("Enter number of card");
+            String cardNumber = ConsoleHelper.readString();
+            System.out.println("Enter pin-code");
+            String pinCode = ConsoleHelper.readString();
+            if (validCreditCards.containsKey(cardNumber)) {
+                if (validCreditCards.getString(cardNumber).equals(pinCode)) {
+                    boolean isLogin = false;
+                    while (cardNumbers.hasMoreElements()) {
+                        String c = cardNumbers.nextElement();
+                        String p = validCreditCards.getString(c);
+                        if (c.equals(cardNumber) && p.equals(pinCode)) {
+                            System.out.println("Welcome dear user!");
+                            isLogin = true;
+                            break;
+                        }
+                    }
+                    if (isLogin) {
+                        break;
+                    }
+                } else {
+                    System.out.println("Incorrect number of card or pin-code");
+                }
             }
         }
     }
 }
-
