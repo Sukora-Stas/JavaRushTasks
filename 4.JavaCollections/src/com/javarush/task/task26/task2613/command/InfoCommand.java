@@ -1,34 +1,31 @@
 package com.javarush.task.task26.task2613.command;
 
 import com.javarush.task.task26.task2613.CashMachine;
+import com.javarush.task.task26.task2613.ConsoleHelper;
 import com.javarush.task.task26.task2613.CurrencyManipulator;
 import com.javarush.task.task26.task2613.CurrencyManipulatorFactory;
+import com.javarush.task.task26.task2613.exception.InterruptOperationException;
 
-import java.util.Collection;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
  * Created by Sukora Stas.
  */
-class InfoCommand implements Command {
-    private ResourceBundle res = ResourceBundle.getBundle(CashMachine.RESOURCE_PATH+"info_en", Locale.ENGLISH);
 
+class InfoCommand implements Command {
+    private ResourceBundle res = ResourceBundle.getBundle(CashMachine.RESOURCE_PATH + "info_en");
 
     @Override
-    public void execute() {
-        Collection<CurrencyManipulator> bills = CurrencyManipulatorFactory.getAllCurrencyManipulators();
-        boolean hasMoney = false;
-
-        for (CurrencyManipulator bill : bills) {
-            if (bill.hasMoney()) {
-                hasMoney = true;
-                System.out.println(bill.getCurrencyCode() + " - " + bill.getTotalAmount());
+    public void execute() throws InterruptOperationException {
+        ConsoleHelper.writeMessage(res.getString("before"));
+        for (CurrencyManipulator manipulator : CurrencyManipulatorFactory.getAllCurrencyManipulators()) {
+            if (manipulator.hasMoney()) {
+                ConsoleHelper.writeMessage(manipulator.getCurrencyCode() + " - " + manipulator.getTotalAmount());
             }
-        }
-
-        if (!hasMoney) {
-            System.out.println("No money available.");
+            else {
+                ConsoleHelper.writeMessage(res.getString("no.money"));
+                break;
+            }
         }
     }
 }
