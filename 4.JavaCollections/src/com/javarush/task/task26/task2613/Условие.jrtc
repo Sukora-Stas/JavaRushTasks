@@ -1,4 +1,28 @@
-taskKey="com.javarush.task.task26.task2613.big12"
+taskKey="com.javarush.task.task26.task2613.big13"
+
+CashMachine (13)
+
+Ты уже разобрался с ResourceBundle - это круто.
+Теперь мы сможем прикрутить локализацию, т.е. поддержку нескольких языков.
+
+1. В DepositCommand, ExitCommand, InfoCommand добавь поле private ResourceBundle res, которое инициализируй соответствующим ресурсом.
+Для DepositCommand ресурс deposit_en.properties.
+Для ExitCommand ресурс exit_en.properties.
+Для InfoCommand ресурс info_en.properties.
+Важно: путь к ресурсам строй динамически, для этого используй у класса CashMachine метод getPackage()
+2. Для каждого нового ресурса замени все строки в соответствующей команде.
+
+
+
+Требования:
+1.	DepositCommand должен содержать приватное поле ResourceBundle res.
+2.	ExitCommand должен содержать приватное поле ResourceBundle res.
+3.	InfoCommand должен содержать приватное поле ResourceBundle res.
+4.	Поле res класса DepositCommand должно быть проинициализировано из файла deposit_en.properties.
+5.	Поле res класса ExitCommand должно быть проинициализировано из файла exit_en.properties.
+6.	Поле res класса InfoCommand должно быть проинициализировано из файла info_en.properties.
+7.	В методе execute() классов DepositCommand, ExitCommand, InfoCommand используй подходящие ресурсы.
+
 
 CashMachine (12)
 
@@ -16,11 +40,6 @@ CashMachine (12)
 2. Замени хардкоженные данные кредитной карточки и пина на проверку наличия данных в ресурсе verifiedCards.properties.
 
 
-
-Требования:
-1.	LoginCommand должен содержать приватное поле ResourceBundle validCreditCards.
-2.	Поле validCreditCards должно быть проинициализировано из файла verifiedCards.properties.
-3.	Используй проверку кредитной карточки и пина через verifiedCards.properties.
 
 
 CashMachine (11)
@@ -146,30 +165,6 @@ USD - 120
 Добавь в манипулятор метод boolean hasMoney(), который будет показывать, добавлены ли какие-то банкноты или нет.
 
 4. В InfoCommand используй метод п.3. и выведите фразу "No money available.", если нет денег в банкомате.
-
-
-
-CashMachine (7)
-
-Возвращаемся к паттерну Command.
-
-1. Создай пакет command, в нем будут все классы, относящиеся к этой логике.
-Подумай над модификатором доступа для всех классов в этом пакете.
-
-2. Создай интерфейс Command с методом void execute().
-
-3. Для каждой операции создай класс-команду, удовлетворяющую паттерну Command.
-Имена классов DepositCommand, InfoCommand, WithdrawCommand, ExitCommand.
-
-4. Создай public класс CommandExecutor, через который можно будет взаимодействовать со всеми командами.
-Создай ему статическую карту Map<Operation, Command> allKnownCommandsMap, которую проинициализируй всеми известными нам операциями и командами.
-
-4.1 Создай метод public static final void execute(Operation operation), который будет дергать метод execute у нужной команды.
-Реализуй эту логику.
-4.2. Расставь правильно модификаторы доступа учитывая, что единственная точка входа - это метод execute.
-
-Проверяем, чтоб структура соответствовала тестам на сервере.
-Логику будем переносить в следующем таске.
 
 
 
