@@ -1,7 +1,8 @@
 package com.javarush.task.task26.task2613;
 
+import com.javarush.task.task26.task2613.exception.InterruptOperationException;
+
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
@@ -12,47 +13,42 @@ public class ConsoleHelper {
 
     public static void writeMessage(String message) {
         System.out.println(message);
-
     }
 
-    public static String readString() throws IOException {
-        String line = bis.readLine();
-        return line;
-    }
-
-    public static String askCurrencyCode() throws IOException {
-        {
-            String code = null;
-            writeMessage("Please choice currency code:");
-            while (true) {
-                code = readString();
-                if (code.length() == 3)
-                    break;
-                else
-                    writeMessage("Error, Please choice again:");
-
-            }
-            return code.toUpperCase();
+    public static String readString() throws InterruptOperationException {
+//        String line = bis.readLine();
+//        return line;
+        String message = null;
+        try {
+            message = bis.readLine();
+        } catch (Exception e) {
         }
-    }
-
-    public static Operation askOperation() {
-        do {
-            writeMessage("Choice operation:\n1) INFO\n2) DEPOSIT\n3) WITHDRAW\n4) EXIT");
-            try {
-                int choice = Integer.parseInt(readString());
-                return Operation.getAllowableOperationByOrdinal(choice);
-            } catch (IllegalArgumentException e) {
-                writeMessage("You input wrong! Try Again.");
-                continue;
-            } catch (IOException e) {
-                writeMessage("You input wrong! Try Again.");
-                continue;
+        if (message != null)
+        {
+            if ("EXIT".equals(message.toUpperCase()))
+            {
+                throw new InterruptOperationException();
             }
-        } while (true);
+        }
+        return message;
+
     }
 
-    public static String[] getValidTwoDigits(String currencyCode) throws IOException {
+    public static String askCurrencyCode() throws InterruptOperationException {
+        String code = null;
+        writeMessage("Please choice currency code:");
+        while (true) {
+            code = readString();
+            if (code.length() == 3)
+                break;
+            else
+                writeMessage("Error, Please choice again:");
+
+        }
+        return code.toUpperCase();
+    }
+
+    public static String[] getValidTwoDigits(String currencyCode) throws InterruptOperationException {
         writeMessage("Input nominal and total:");
 
         String[] input;
@@ -75,6 +71,23 @@ public class ConsoleHelper {
             break;
         }
         return input;
+
+    }
+
+    public static Operation askOperation() throws InterruptOperationException
+    {
+        while (true)
+        {
+            try
+            {
+                writeMessage("Choice operation:\n1) INFO\n2) DEPOSIT\n3) WITHDRAW\n4) EXIT");
+                return Operation.getAllowableOperationByOrdinal(Integer.valueOf(readString()));
+            }
+            catch (IllegalArgumentException e)
+            {
+                System.out.println("Incorrect operation");
+            }
+        }
     }
 
 }

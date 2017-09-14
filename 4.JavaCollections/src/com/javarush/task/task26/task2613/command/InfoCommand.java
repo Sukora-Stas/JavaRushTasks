@@ -1,8 +1,9 @@
 package com.javarush.task.task26.task2613.command;
 
-import com.javarush.task.task26.task2613.ConsoleHelper;
 import com.javarush.task.task26.task2613.CurrencyManipulator;
 import com.javarush.task.task26.task2613.CurrencyManipulatorFactory;
+
+import java.util.Collection;
 
 /**
  * Created by Sukora Stas.
@@ -10,17 +11,18 @@ import com.javarush.task.task26.task2613.CurrencyManipulatorFactory;
 class InfoCommand implements Command {
     @Override
     public void execute() {
-        boolean money = false;
+        Collection<CurrencyManipulator> bills = CurrencyManipulatorFactory.getAllCurrencyManipulators();
+        boolean hasMoney = false;
 
-        for (CurrencyManipulator currency : CurrencyManipulatorFactory.getAllCurrencyManipulators())
-            if (currency.hasMoney()) {
-                if (currency.getTotalAmount() > 0) {
-                    ConsoleHelper.writeMessage(currency.getCurrencyCode() + " - " + currency.getTotalAmount());
-                    money = true;
-                }
+        for (CurrencyManipulator bill : bills) {
+            if (bill.hasMoney()) {
+                hasMoney = true;
+                System.out.println(bill.getCurrencyCode() + " - " + bill.getTotalAmount());
             }
+        }
 
-        if (!money)
-            ConsoleHelper.writeMessage("No money available.");
+        if (!hasMoney) {
+            System.out.println("No money available.");
+        }
     }
 }
