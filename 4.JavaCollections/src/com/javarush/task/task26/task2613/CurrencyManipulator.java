@@ -15,6 +15,13 @@ public class CurrencyManipulator {
         this.currencyCode = currencyCode;
     }
 
+    public void addAmount(int denomination, int count) {
+        if (denominations.containsKey(denomination)) {
+            denominations.put(denomination, denominations.get(denomination) + count);
+        } else {
+            denominations.put(denomination, count);
+        }
+    }
 
     public String getCurrencyCode() {
         return currencyCode;

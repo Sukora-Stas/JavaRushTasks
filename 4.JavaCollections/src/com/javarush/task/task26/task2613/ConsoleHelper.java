@@ -24,9 +24,52 @@ public class ConsoleHelper {
             if (input.equalsIgnoreCase("exit")) {
                 throw new InterruptOperationException();
             }
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
 
         return input;
     }
+
+    public static String askCurrencyCode() throws InterruptOperationException {
+        {
+            String code = null;
+            writeMessage("Please choice currency code:");
+            while (true) {
+                code = readString();
+                if (code.length() == 3)
+                    break;
+                else
+                    writeMessage("Error, Please choice again:");
+
+            }
+            return code.toUpperCase();
+        }
+    }
+
+    public static String[] getValidTwoDigits(String currencyCode) throws InterruptOperationException {
+        writeMessage("Input nominal and total:");
+
+        String[] input;
+        while (true) {
+            input = readString().split(" ");
+
+            int nominal = 0;
+            int total = 0;
+            try {
+                nominal = Integer.parseInt(input[0]);
+                total = Integer.parseInt(input[1]);
+            } catch (Exception e) {
+                writeMessage("Error, Repeat again:");
+                continue;
+            }
+            if (nominal <= 0 || total <= 0) {
+                writeMessage("Error, Repeat again:");
+                continue;
+            }
+            break;
+        }
+        return input;
+    }
+
 
 }
