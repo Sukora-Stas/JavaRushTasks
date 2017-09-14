@@ -23,6 +23,14 @@ public class CurrencyManipulator {
         }
     }
 
+    public int getTotalAmount() {
+        int sum = 0;
+        for (Map.Entry<Integer, Integer> pair : denominations.entrySet())
+            sum += pair.getKey() * pair.getValue();
+
+        return sum;
+    }
+
     public String getCurrencyCode() {
         return currencyCode;
     }
