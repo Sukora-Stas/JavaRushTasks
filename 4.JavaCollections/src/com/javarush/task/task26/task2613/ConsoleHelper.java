@@ -1,7 +1,5 @@
 package com.javarush.task.task26.task2613;
 
-import com.javarush.task.task26.task2613.exception.InterruptOperationException;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,27 +8,19 @@ import java.io.InputStreamReader;
  * Created by Sukora Stas.
  */
 public class ConsoleHelper {
-
     private static BufferedReader bis = new BufferedReader(new InputStreamReader(System.in));
 
     public static void writeMessage(String message) {
         System.out.println(message);
+
     }
 
-    public static String readString() throws InterruptOperationException {
-        String input = "";
-        try {
-            input = bis.readLine();
-            if (input.equalsIgnoreCase("exit")) {
-                throw new InterruptOperationException();
-            }
-        } catch (IOException ignored) {
-        }
-
-        return input;
+    public static String readString() throws IOException {
+        String line = bis.readLine();
+        return line;
     }
 
-    public static String askCurrencyCode() throws InterruptOperationException {
+    public static String askCurrencyCode() throws IOException {
         {
             String code = null;
             writeMessage("Please choice currency code:");
@@ -46,7 +36,23 @@ public class ConsoleHelper {
         }
     }
 
-    public static String[] getValidTwoDigits(String currencyCode) throws InterruptOperationException {
+    public static Operation askOperation() {
+        do {
+            writeMessage("Choice operation:\n1) INFO\n2) DEPOSIT\n3) WITHDRAW\n4) EXIT");
+            try {
+                int choice = Integer.parseInt(readString());
+                return Operation.getAllowableOperationByOrdinal(choice);
+            } catch (IllegalArgumentException e) {
+                writeMessage("You input wrong! Try Again.");
+                continue;
+            } catch (IOException e) {
+                writeMessage("You input wrong! Try Again.");
+                continue;
+            }
+        } while (true);
+    }
+
+    public static String[] getValidTwoDigits(String currencyCode) throws IOException {
         writeMessage("Input nominal and total:");
 
         String[] input;
@@ -70,6 +76,5 @@ public class ConsoleHelper {
         }
         return input;
     }
-
 
 }
