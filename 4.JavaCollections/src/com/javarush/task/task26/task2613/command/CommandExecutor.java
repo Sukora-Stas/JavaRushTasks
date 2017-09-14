@@ -12,10 +12,12 @@ import java.util.Map;
 public class CommandExecutor {
     private static final Map<Operation, Command> allKnownCommandsMap;
 
-    private CommandExecutor() {}
+    private CommandExecutor() {
+    }
 
     static {
         allKnownCommandsMap = new HashMap<>();
+        allKnownCommandsMap.put(Operation.LOGIN, new LoginCommand());
         allKnownCommandsMap.put(Operation.INFO, new InfoCommand());
         allKnownCommandsMap.put(Operation.DEPOSIT, new DepositCommand());
         allKnownCommandsMap.put(Operation.WITHDRAW, new WithdrawCommand());
