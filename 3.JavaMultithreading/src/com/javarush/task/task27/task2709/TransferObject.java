@@ -5,29 +5,24 @@ public class TransferObject {
     protected volatile boolean isValuePresent = false; //use this variable
 
     public synchronized int get() {
-        if (!isValuePresent) {
+        while (!isValuePresent) {
             try {
-                wait();
+                this.wait();
             }
-            catch (InterruptedException e) {
-                System.out.println("interrupted Exception caught");
-            }
+            catch (InterruptedException e) {}
         }
         System.out.println("Got: " + value);
         isValuePresent = false;
         notify();
         return value;
-
     }
 
     public synchronized void put(int value) {
-        if (isValuePresent) {
+        while (isValuePresent) {
             try {
-                wait();
+                this.wait();
             }
-            catch (InterruptedException e) {
-                System.out.println("interrupted Exception caught");
-            }
+            catch (InterruptedException e) {}
         }
         this.value = value;
         isValuePresent = true;
