@@ -2,9 +2,8 @@ package com.javarush.task.task26.task2611;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-
 public class Consumer implements Runnable {
-    protected ConcurrentHashMap<String, String> map;
+    private ConcurrentHashMap<String, String> map;
 
     public Consumer(ConcurrentHashMap<String, String> map) {
         this.map = map;
