@@ -9,6 +9,7 @@ import java.util.Locale;
  * Created by Sukora Stas.
  */
 public class CashMachine {
+    //public static final String RESOURCE_PATH = CashMachine.class.getPackage().getName() + ".resources.";
     public static final String RESOURCE_PATH = "com.javarush.task.task26.task2613.resources.";
     public static void main(String[] args) {
         Locale.setDefault(Locale.ENGLISH);
