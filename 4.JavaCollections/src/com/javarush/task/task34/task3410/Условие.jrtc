@@ -1,4 +1,29 @@
-taskKey="com.javarush.task.task34.task3410.big13"
+taskKey="com.javarush.task.task34.task3410.big14"
+
+Sokoban (14)
+
+Добавим немного интерактивности в нашу игру (перемещение игрока с помощью
+клавиатуры). Начнем с обработки нажатия клавиш клавиатуры.
+14.1. Добавь в класс Field вложенный класс KeyHandler унаследованный от
+KeyAdapter.
+14.2. Перегрузи у него метод keyPressed(). Если была нажата клавиша с кодом
+VK_LEFT, то пошли eventListener-у событие move с параметром Direction.LEFT.
+Аналогичным образом обработай нажатия клавиш с кодом VK_RIGHT, VK_UP и
+VK_DOWN. Если пользователь нажал клавишу R с кодом VK_R, то вызови у слушателя
+событий метод restart().
+14.3. В конструкторе класса Field:
+14.3.1. Создай объект класса KeyHandler.
+14.3.2. Добавь его слушателем с помощью метода addKeyListener().
+14.3.3. Установи focusable в true (метод setFocusable()).
+
+
+Требования:
+1.	Добавь в класс Field вложенный класс KeyHandler унаследованный от KeyAdapter.
+2.	В классе KeyHandler правильно реализуй метод keyPressed().
+3.	В конструкторе класса Field создай объект класса KeyHandler.
+4.	В конструкторе класса Field добавь объект класса KeyHandler слушателем с помощью метода addKeyListener().
+5.	В конструкторе класса Field установи focusable в true (метод setFocusable()).
+
 
 Sokoban (13)
 
@@ -21,14 +46,6 @@ Sokoban (13)
 13.4. Реализуй в контроллере метод levelCompleted(int level), он должен вызвать
 метод completed() у представления.
 
-
-Требования:
-1.	Конструктор класса Controller должен устанавливать слушателя событий у модели и представления.
-2.	Реализуй метод контроллера move(Direction direction).
-3.	Реализуй метод контроллера restart().
-4.	Реализуй метод контроллера startNextLevel().
-5.	Реализуй в представление метод completed(int level).
-6.	Реализуй в контроллере метод levelCompleted(int level).
 
 
 Sokoban (12)
@@ -105,21 +122,6 @@ Sokoban (9)
 9.5. Добавь в классы Model, View и Field по методу setEventListener(EventListener
 eventListener). Этот метод в классе View должен вызвать аналогичный метод у объекта
 field, а в классах Model и Field устанавливать значение внутренних полей eventListener.
-
-
-
-Sokoban (8)
-
-Ты создал полную коллекцию типов игровых объектов. Давай создадим класс, который
-будет хранить эти объекты.
-8.1. Создай класс GameObjects в пакте model.
-8.2. Добавь в него:
-8.2.1. Поля Set<Wall> walls, Set<Box> boxes, Set<Home> homes и Player player.
-8.2.2. Геттеры для этих полей.
-8.2.3. Конструктор класса, принимающий Set<Wall> walls, Set <Box> boxes, Set<Home> homes,
-Player player и инициализирующий поля класса.
-8.2.4. Метод Set<GameObject> getAll(). Он должен возвращать множество, содержащее
-все объекты, хранящиеся внутри класса.
 
 
 
