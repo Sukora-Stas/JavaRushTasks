@@ -1,6 +1,7 @@
 package com.javarush.task.task34.task3410.view;
 
 import com.javarush.task.task34.task3410.model.Box;
+import com.javarush.task.task34.task3410.model.Home;
 import com.javarush.task.task34.task3410.model.Player;
 
 import javax.swing.*;
@@ -22,7 +23,11 @@ public class Field extends JPanel {
 
         Player player = new Player(30, 30);
         player.draw(g);
+
         Box box = new Box(100, 100);
         box.draw(g);
+
+        Home home = new Home(150, 150);
+        home.draw(g);
     }
 }
