@@ -19,8 +19,10 @@ public class Controller implements EventListener {
     public Controller() {
         model = new Model();
         model.restart();
-        view=new View(this);
+        model.setEventListener(this);
+        view = new View(this);
         view.init();
+        view.setEventListener(this);
     }
 
     public GameObjects getGameObjects() {
@@ -29,21 +31,24 @@ public class Controller implements EventListener {
 
     @Override
     public void move(Direction direction) {
-
+        model.move(direction);
+        view.update();
     }
 
     @Override
     public void restart() {
-
+        model.restart();
+        view.update();
     }
 
     @Override
     public void startNextLevel() {
-
+        model.startNextLevel();
+        view.update();
     }
 
     @Override
     public void levelCompleted(int level) {
-
+        view.completed(level);
     }
 }
