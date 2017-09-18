@@ -17,31 +17,33 @@ public class OrderManager implements Observer {
     private LinkedBlockingQueue<Order> orderQueue = new LinkedBlockingQueue<>();
 
     public OrderManager() {
-        Thread thread = new Thread() {
+        Thread threadDaemon = new Thread() {
+            Set<Cook> cooks = StatisticManager.getInstance().getCooks();
             @Override
             public void run() {
-                Set<Cook> cooks = StatisticManager.getInstance().getCooks();
                 while (true) {
                     try {
-                        Thread.sleep(10);
-                    }
-                    catch (InterruptedException e) {}
-                    if (!orderQueue.isEmpty()) {
-                        for (Cook cook : cooks) {
-                            if (!cook.isBusy()) {
-                                Order order = orderQueue.poll();
-                                if (order != null)
-                                    cook.startCookingOrder(order);
+                        for (final Cook cook : cooks) {
+                            if (!cook.isBusy() && !orderQueue.isEmpty()) {
+                                final Order order = orderQueue.poll();
+                                Thread th = new Thread() {
+                                    @Override
+                                    public void run() {
+                                        cook.startCookingOrder(order);
+                                    }
+                                };
+                                th.start();
                             }
-                            if (orderQueue.isEmpty())
-                                break;
                         }
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        //break;
                     }
                 }
             }
         };
-        thread.setDaemon(true);
-        thread.start();
+        threadDaemon.setDaemon(true);
+        threadDaemon.start();
     }
 
     @Override
