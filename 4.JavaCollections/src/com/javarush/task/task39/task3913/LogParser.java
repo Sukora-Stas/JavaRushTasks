@@ -12,8 +12,9 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQuery{
+public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQuery {
     private Path logDir;
+
     public LogParser(Path logDir) {
         this.logDir = logDir;
     }
@@ -22,18 +23,22 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
     public int getNumberOfUniqueIPs(Date after, Date before) {
         return getUniqueIPs(after, before).size();
     }
+
     @Override
     public Set<String> getUniqueIPs(Date after, Date before) {
         return getIpSet(null, after, before);
     }
+
     @Override
     public Set<String> getIPsForUser(String user, Date after, Date before) {
         return getIpSet(user, after, before);
     }
+
     @Override
     public Set<String> getIPsForEvent(Event event, Date after, Date before) {
         return getIpSet(event, after, before);
     }
+
     @Override
     public Set<String> getIPsForStatus(Status status, Date after, Date before) {
         return getIpSet(status, after, before);
@@ -63,6 +68,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return recordList;
     }
+
     private boolean isFieldMatch(Object recordField, LogRecord record) {
         boolean criteria = false;
         if (recordField == null)
@@ -119,12 +125,11 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
     }
 
 
-
     @Override
     public Set<String> getAllUsers() {
         Set<String> result = new HashSet<>();
         List<LogRecord> allRecords = getParsedRecords(logDir);
-        for (LogRecord logRecord: allRecords){
+        for (LogRecord logRecord : allRecords) {
             if (!result.contains(logRecord.getUser())) result.add(logRecord.getUser());
         }
         return result;
@@ -132,10 +137,10 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
 
     @Override
     public int getNumberOfUsers(Date after, Date before) {
-        int count =0;
+        int count = 0;
         Set<String> result = new HashSet<>();
         List<LogRecord> allRecords = getParsedRecords(logDir);
-        for (LogRecord logRecord: allRecords){
+        for (LogRecord logRecord : allRecords) {
             if (!result.contains(logRecord.getUser())) {
                 result.add(logRecord.getUser());
                 if (isDateInside(after, before, logRecord.getDate())) count++;
@@ -262,6 +267,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return dates;
     }
+
     @Override
     public Set<Date> getDatesWhenSomethingFailed(Date after, Date before) {
         Set<Date> dates = new HashSet<>();
@@ -272,6 +278,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return dates;
     }
+
     @Override
     public Set<Date> getDatesWhenErrorHappened(Date after, Date before) {
         Set<Date> dates = new HashSet<>();
@@ -282,6 +289,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return dates;
     }
+
     @Override
     public Date getDateWhenUserLoggedFirstTime(String user, Date after, Date before) {
         Date date = null;
@@ -293,6 +301,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return date;
     }
+
     @Override
     public Date getDateWhenUserSolvedTask(String user, int task, Date after, Date before) {
         Date date = null;
@@ -309,6 +318,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return date;
     }
+
     @Override
     public Date getDateWhenUserDoneTask(String user, int task, Date after, Date before) {
         Date date = null;
@@ -325,6 +335,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return date;
     }
+
     @Override
     public Set<Date> getDatesWhenUserWroteMessage(String user, Date after, Date before) {
         Set<Date> dates = new HashSet<>();
@@ -337,6 +348,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return dates;
     }
+
     @Override
     public Set<Date> getDatesWhenUserDownloadedPlugin(String user, Date after, Date before) {
         Set<Date> dates = new HashSet<>();
@@ -354,6 +366,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
     public int getNumberOfAllEvents(Date after, Date before) {
         return getAllEvents(after, before).size();
     }
+
     @Override
     public Set<Event> getAllEvents(Date after, Date before) {
         Set<Event> set = new HashSet<>();
@@ -364,6 +377,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return set;
     }
+
     @Override
     public Set<Event> getEventsForIP(String ip, Date after, Date before) {
         Set<Event> set = new HashSet<>();
@@ -374,6 +388,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return set;
     }
+
     @Override
     public Set<Event> getEventsForUser(String user, Date after, Date before) {
         Set<Event> set = new HashSet<>();
@@ -384,6 +399,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return set;
     }
+
     @Override
     public Set<Event> getFailedEvents(Date after, Date before) {
         Set<Event> set = new HashSet<>();
@@ -394,6 +410,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return set;
     }
+
     @Override
     public Set<Event> getErrorEvents(Date after, Date before) {
         Set<Event> set = new HashSet<>();
@@ -404,6 +421,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return set;
     }
+
     @Override
     public int getNumberOfAttemptToSolveTask(int task, Date after, Date before) {
         int i = 0;
@@ -418,6 +436,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return i;
     }
+
     @Override
     public int getNumberOfSuccessfulAttemptToSolveTask(int task, Date after, Date before) {
         int i = 0;
@@ -432,6 +451,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return i;
     }
+
     @Override
     public Map<Integer, Integer> getAllSolvedTasksAndTheirNumber(Date after, Date before) {
         Map<Integer, Integer> taskSolved = new HashMap<>();
@@ -447,6 +467,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return taskSolved;
     }
+
     @Override
     public Map<Integer, Integer> getAllDoneTasksAndTheirNumber(Date after, Date before) {
         Map<Integer, Integer> taskSolved = new HashMap<>();
@@ -562,6 +583,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return users;
     }
+
     private Set<Status> getAllStatuses(String field, String value, Date after, Date before) {
         Set<Status> set = new HashSet<>();
         for (LogRecord record : getParsedRecords(logDir)) {
@@ -575,6 +597,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         }
         return set;
     }
+
     private Set<Date> getAllDates(String field, String value, Date after, Date before) {
         Set<Date> dates = new HashSet<>();
         for (LogRecord record : getParsedRecords(logDir)) {
@@ -590,7 +613,6 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
     }
 
 
-
     private class LogRecord {
         private String ip;
         private String user;
@@ -598,6 +620,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
         private Event event;
         private String taskNumber;
         private Status status;
+
         public LogRecord(String ip, String user, Date date, Event event, Status status) {
             this.ip = ip;
             this.user = user;
@@ -605,6 +628,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
             this.event = event;
             this.status = status;
         }
+
         public LogRecord(String record) {
             String[] strings = record.split("\t");
             this.ip = strings[0].trim();
@@ -620,21 +644,27 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
             if (eventAndParameter.length > 1) taskNumber = eventAndParameter[1];
             status = Status.valueOf(strings[4]);
         }
+
         public String getIp() {
             return ip;
         }
+
         public String getUser() {
             return user;
         }
+
         public Date getDate() {
             return date;
         }
+
         public Event getEvent() {
             return event;
         }
+
         public String getTaskNumber() {
             return taskNumber;
         }
+
         public Status getStatus() {
             return status;
         }
