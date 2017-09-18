@@ -9,8 +9,8 @@ import java.util.Observer;
  * Created by Sukora Stas.
  */
 public class Waiter implements Observer {
-    @Override
-    public void update(Observable observable, Object arg) {
-        ConsoleHelper.writeMessage((Order) arg + " was cooked by " + observable);
+
+    public void update(Observable o, Object arg) {
+        ConsoleHelper.writeMessage(arg + " was cooked by " + o);
     }
 }

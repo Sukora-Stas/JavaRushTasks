@@ -11,12 +11,7 @@ public class NoAvailableVideoEventDataRow implements EventDataRow{
 
     public NoAvailableVideoEventDataRow(int totalDuration) {
         this.totalDuration = totalDuration;
-        this.currentDate = new Date();
-    }
-
-    @Override
-    public EventType getType() {
-        return EventType.NO_AVAILABLE_VIDEO;
+        currentDate = new Date();
     }
 
     @Override
@@ -27,5 +22,10 @@ public class NoAvailableVideoEventDataRow implements EventDataRow{
     @Override
     public int getTime() {
         return totalDuration;
+    }
+
+    @Override
+    public EventType getType() {
+        return EventType.NO_AVAILABLE_VIDEO;
     }
 }

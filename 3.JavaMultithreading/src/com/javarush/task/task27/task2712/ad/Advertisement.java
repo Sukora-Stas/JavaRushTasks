@@ -17,15 +17,11 @@ public class Advertisement {
         this.initialAmount = initialAmount;
         this.hits = hits;
         this.duration = duration;
-        this.amountPerOneDisplaying = initialAmount / hits;
+        this.amountPerOneDisplaying=initialAmount/hits;
     }
 
-    public Object getContent() {
-        return content;
-    }
-
-    public long getInitialAmount() {
-        return initialAmount;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getHits() {
@@ -44,8 +40,11 @@ public class Advertisement {
         return amountPerOneDisplaying;
     }
 
-    public void revalidate() {
-        if (hits < 1) throw new UnsupportedOperationException();
+    public void revalidate()
+    {
+        if (hits <= 0) throw new UnsupportedOperationException();
+        if (hits == 1) { amountPerOneDisplaying += initialAmount % amountPerOneDisplaying; }
         hits--;
     }
 }
+

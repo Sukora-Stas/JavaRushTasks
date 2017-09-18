@@ -11,9 +11,15 @@ import java.util.*;
 /**
  * Created by Sukora Stas.
  */
+
+/*
+*
+
+    */
+
 public class StatisticManager {
     private static StatisticManager ourInstance = new StatisticManager();
-    private StatisticStorage statisticStorage = new StatisticStorage();
+    private StatisticStorage statisticStorage=new StatisticStorage();
 
     public Set<Cook> getCooks() {
         return cooks;
@@ -21,14 +27,17 @@ public class StatisticManager {
 
     private Set<Cook> cooks = new HashSet<Cook>();
 
-    public static StatisticManager getInstance() {
+
+    private StatisticManager() {}
+
+    public static StatisticManager getInstance()
+    {
         return ourInstance;
     }
 
-    private StatisticManager() {
-    }
-
-    public void register(EventDataRow data) {
+    public void register(EventDataRow data)
+    {
+        if (data == null) return;
         statisticStorage.put(data);
     }
 
@@ -36,79 +45,69 @@ public class StatisticManager {
         cooks.add(cook);
     }
 
-    public Map<Date, Double> getTotalMoneyPerDay() {
-        Map<Date, Double> result = new TreeMap<Date, Double>(Collections.reverseOrder());
-        List<EventDataRow> eventDataRowList = statisticStorage.get(EventType.SELECTED_VIDEOS);
-        Double amount;
-        Date date;
-        Calendar calendar;
-        for (EventDataRow eventDataRow : eventDataRowList) {
-            VideoSelectedEventDataRow adVideo = (VideoSelectedEventDataRow) eventDataRow;
-            amount = adVideo.getAmount() * 0.01d;
-            calendar = Calendar.getInstance();
-            calendar.setTime(adVideo.getDate());
-            GregorianCalendar gc = new GregorianCalendar(
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
-            );
-            date = gc.getTime();
-            if (result.containsKey(date))
-                amount += result.get(date);
-            result.put(date, amount);
-        }
-        return result;
-    }
-
-    public Map<Date, Map<String, Integer>> getCookInfo() {
-        Map<Date, Map<String, Integer>> result = new TreeMap<Date, Map<String, Integer>>(Collections.reverseOrder());
-        List<EventDataRow> eventDataRowList = statisticStorage.get(EventType.COOKED_ORDER);
-        Date date;
-        Calendar calendar;
-        String cookName;
-        int cookingTimeSeconds;
-        for (EventDataRow eventDataRow : eventDataRowList) {
-            CookedOrderEventDataRow cookedOrder = (CookedOrderEventDataRow) eventDataRow;
-            calendar = Calendar.getInstance();
-            calendar.setTime(cookedOrder.getDate());
-            GregorianCalendar gc = new GregorianCalendar(
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
-            );
-            date = gc.getTime();
-            cookName = cookedOrder.getCookName();
-            cookingTimeSeconds = cookedOrder.getTime();
-            Map<String, Integer> cookTime = new TreeMap<String, Integer>();
-            if (result.containsKey(date)) {
-                cookTime = result.get(date);
-                if (cookTime.containsKey(cookName)) {
-                    cookingTimeSeconds += cookTime.get(cookName);
-                }
-            }
-            cookTime.put(cookName, cookingTimeSeconds);
-            result.put(date, cookTime);
-        }
-        return result;
-    }
-
-    private class StatisticStorage {
-        private Map<EventType, List<EventDataRow>> storage = new HashMap<EventType, List<EventDataRow>>();
+    private class StatisticStorage
+    {
+        private Map<EventType, List<EventDataRow>> storage = new HashMap<>();
 
         public StatisticStorage() {
-            for (EventType eventType : EventType.values()) {
-                storage.put(eventType, new ArrayList<EventDataRow>());
-            }
+            for (EventType eventType:EventType.values())
+                storage.put(eventType,new ArrayList<EventDataRow>());
         }
 
         private void put(EventDataRow data) {
-            List<EventDataRow> eventDataRows = storage.get(data.getType());
-            eventDataRows.add(data);
-            storage.put(data.getType(), eventDataRows);
+            if (data == null) return;
+            storage.get(data.getType()).add(data);
         }
 
-        private List<EventDataRow> get(EventType eventType) {
+        private List<EventDataRow> get(EventType eventType)
+        {
             return storage.get(eventType);
         }
     }
+
+    public Map<Date, Double> getAdRevenue() {
+        Map<Date, Double> resultMap = new TreeMap<>(Collections.reverseOrder());
+        for (EventDataRow event : statisticStorage.get(EventType.SELECTED_VIDEOS)) {
+            Date date = dateToStringMidnight(event.getDate());
+            VideoSelectedEventDataRow eventData = (VideoSelectedEventDataRow) event;
+            if (resultMap.containsKey(date)) {
+                resultMap.put(date, resultMap.get(date) + (0.01d * (double) eventData.getAmount()));
+            } else {
+                resultMap.put(date, (0.01d * (double) eventData.getAmount()));
+            }
+        }
+        return resultMap;
+    }
+    public Map<Date, Map<String, Integer>> getCookWorkload() {
+        Map<Date, Map<String, Integer>> resultMap = new TreeMap<>(Collections.reverseOrder());
+        for (EventDataRow event : statisticStorage.get(EventType.COOKED_ORDER)) {
+            Date date = dateToStringMidnight(event.getDate());
+            CookedOrderEventDataRow eventData = (CookedOrderEventDataRow) event;
+            int time = eventData.getTime();
+            if (time == 0) continue;
+            if (time % 60 == 0) time = time / 60;
+            else time = time / 60 + 1;
+            if (resultMap.containsKey(date)) {
+                Map<String, Integer> cookInfo = resultMap.get(date);
+                if (cookInfo.containsKey(eventData.getCookName()))
+                    cookInfo.put(eventData.getCookName(), cookInfo.get(eventData.getCookName()) + time);
+                else cookInfo.put(eventData.getCookName(), time);
+            } else {
+                TreeMap<String, Integer> cookInfo = new TreeMap<>();
+                cookInfo.put(eventData.getCookName(), time);
+                resultMap.put(date, cookInfo);
+            }
+        }
+        return resultMap;
+    }
+    private Date dateToStringMidnight(Date date) {
+        GregorianCalendar roundedDate = new GregorianCalendar();
+        roundedDate.setTime(date);
+        roundedDate.set(Calendar.HOUR_OF_DAY, 0);
+        roundedDate.set(Calendar.MINUTE, 0);
+        roundedDate.set(Calendar.SECOND, 0);
+        roundedDate.set(Calendar.MILLISECOND, 0);
+        return roundedDate.getTime();
+    }
+
 }

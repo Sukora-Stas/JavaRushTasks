@@ -12,47 +12,32 @@ import java.util.List;
  * Created by Sukora Stas.
  */
 public class ConsoleHelper {
-
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-
-    public static void writeMessage(String message) {
+    public static void writeMessage(String message)
+    {
         System.out.println(message);
     }
 
-
-    public static String readString() throws IOException {
-
+    public static String readString()throws IOException
+    {
         return reader.readLine();
     }
-
-    public static List<Dish> getAllDishesForOrder() throws IOException {
-
-        List<Dish> listDish = new ArrayList<>();
-
-        String str = "";
-        writeMessage("Выберите блюдо:\n" + Dish.allDishesToString());
-
-
-        while (true) {
-
-            str = readString();
-            if (str.equalsIgnoreCase("exit")) {
-                break;
-            }
-
-            else {
-                try {
-                    listDish.add(Dish.valueOf(str));
-                }
-
-                catch (IllegalArgumentException e) {
-                    writeMessage(str + " is not detected");
-                }
+    public static List<Dish> getAllDishesForOrder() throws IOException
+    {
+        List<Dish> dishes = new ArrayList<>();
+        ConsoleHelper.writeMessage("Выберите блюда. Для завершения наберите 'exit'.");
+        ConsoleHelper.writeMessage(Dish.allDishesToString());
+        String s;
+        while (!(s=readString()).equalsIgnoreCase("exit"))
+        {
+            try {
+                dishes.add(Dish.valueOf(s));
+            } catch (IllegalArgumentException e) {
+                ConsoleHelper.writeMessage("Такого блюда нет");
             }
         }
-
-        return listDish;
+        return dishes;
     }
 
 }

@@ -6,9 +6,9 @@ import java.util.Date;
  * Created by Serhii Boiko on 08.07.2017.
  */
 public interface EventDataRow {
-    EventType getType();
+    public EventType getType();
 
-    Date getDate();
+    public Date getDate();
 
     int getTime();
 }

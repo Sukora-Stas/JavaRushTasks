@@ -8,29 +8,23 @@ import java.util.List;
 /**
  * Created by Serhii Boiko on 08.07.2017.
  */
-public class VideoSelectedEventDataRow implements EventDataRow {
+public class VideoSelectedEventDataRow implements EventDataRow{
     private List<Advertisement> optimalVideoSet;
     private long amount;
     private int totalDuration;
     private Date currentDate;
 
-    public VideoSelectedEventDataRow(List<Advertisement> optimalVideoSet, long amount, int totalDuration) {
+    public long getAmount() {
+        return amount;
+    }
+
+    public VideoSelectedEventDataRow(List<Advertisement> optimalVideoSet, long amount, int totalDuration)
+    {
+        currentDate = new Date();
         this.optimalVideoSet = optimalVideoSet;
         this.amount = amount;
         this.totalDuration = totalDuration;
-        this.currentDate = new Date();
     }
-
-    public void setCurrentDate(Date currentDate)
-    {
-        this.currentDate = currentDate;
-    }
-
-    @Override
-    public EventType getType() {
-        return EventType.SELECTED_VIDEOS;
-    }
-
     @Override
     public Date getDate() {
         return currentDate;
@@ -41,7 +35,8 @@ public class VideoSelectedEventDataRow implements EventDataRow {
         return totalDuration;
     }
 
-    public long getAmount() {
-        return amount;
+    @Override
+    public EventType getType() {
+        return EventType.SELECTED_VIDEOS;
     }
 }
