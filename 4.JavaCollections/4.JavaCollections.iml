@@ -42,5 +42,6 @@
     <orderEntry type="library" name="org.apache.directory.studio:org.apache.httpcomponents.httpclient:4.0" level="project" />
     <orderEntry type="library" name="org.jsoup:jsoup:1.9.2" level="project" />
     <orderEntry type="module" module-name="3.JavaMultithreading" />
+    <orderEntry type="library" name="org.apache.httpcomponents:httpclient:4.5.2" level="project" />
   </component>
 </module>
