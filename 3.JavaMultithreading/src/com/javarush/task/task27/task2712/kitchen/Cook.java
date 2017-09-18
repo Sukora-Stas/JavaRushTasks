@@ -5,13 +5,12 @@ import com.javarush.task.task27.task2712.statistic.StatisticManager;
 import com.javarush.task.task27.task2712.statistic.event.CookedOrderEventDataRow;
 
 import java.util.Observable;
-import java.util.Observer;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by Sukora Stas.
  */
-public class Cook extends Observable implements Runnable, Observer {
+public class Cook extends Observable implements Runnable{
     private String name;
     private boolean busy;
     private LinkedBlockingQueue<Order> queue;
@@ -64,11 +63,6 @@ public class Cook extends Observable implements Runnable, Observer {
             }
             if (busy && queue.isEmpty()) break;
         }
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-
     }
 }
 
