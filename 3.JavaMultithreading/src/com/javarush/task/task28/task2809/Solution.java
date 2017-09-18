@@ -21,7 +21,7 @@ public class Solution {
     private static boolean isEveryoneReady = false;
 
     private static void start(List<Character> characters) throws InterruptedException {
-        final Phaser phaser = new Phaser(1 + characters.size()); // 1 - чтоб зарегистрировать себя
+        final Phaser phaser = new Phaser(1 + characters.size());
 
         for (final Character character : characters) {
             final String member = character.toString();
