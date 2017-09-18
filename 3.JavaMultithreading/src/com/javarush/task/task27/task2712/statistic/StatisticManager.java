@@ -1,6 +1,5 @@
 package com.javarush.task.task27.task2712.statistic;
 
-import com.javarush.task.task27.task2712.kitchen.Cook;
 import com.javarush.task.task27.task2712.statistic.event.CookedOrderEventDataRow;
 import com.javarush.task.task27.task2712.statistic.event.EventDataRow;
 import com.javarush.task.task27.task2712.statistic.event.EventType;
@@ -12,21 +11,9 @@ import java.util.*;
  * Created by Sukora Stas.
  */
 
-/*
-*
-
-    */
-
 public class StatisticManager {
     private static StatisticManager ourInstance = new StatisticManager();
     private StatisticStorage statisticStorage=new StatisticStorage();
-
-    public Set<Cook> getCooks() {
-        return cooks;
-    }
-
-    private Set<Cook> cooks = new HashSet<Cook>();
-
 
     private StatisticManager() {}
 
@@ -39,10 +26,6 @@ public class StatisticManager {
     {
         if (data == null) return;
         statisticStorage.put(data);
-    }
-
-    public void register(Cook cook) {
-        cooks.add(cook);
     }
 
     private class StatisticStorage

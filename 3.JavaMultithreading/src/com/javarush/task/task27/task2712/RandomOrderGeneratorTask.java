@@ -1,32 +1,32 @@
 package com.javarush.task.task27.task2712;
 
-import com.javarush.task.task27.task2712.kitchen.Order;
-
 import java.util.List;
 
 /**
  * Created by Sukora Stas.
  */
 public class RandomOrderGeneratorTask implements Runnable {
-    private List<Tablet> tablets;
     private int interval;
-    public RandomOrderGeneratorTask(List<Tablet> tablets, int interval) {
-        this.interval = interval;
+    private List<Tablet> tablets;
+
+    public RandomOrderGeneratorTask(List<Tablet> tablets, int interval){
         this.tablets = tablets;
+        this.interval = interval;
     }
+
     @Override
     public void run() {
-        if (tablets.size() > 0) {
-            while (!Thread.currentThread().isInterrupted()) {
-                int rnd = (int) (Math.random()*tablets.size());
-                Tablet tablet = tablets.get(rnd);
+        if(tablets.isEmpty()) return;
+        try
+        {
+            while (!Thread.currentThread().isInterrupted())
+            {
+                Tablet tablet =  tablets.get((int)(Math.random()*tablets.size()));
                 tablet.createTestOrder();
-                try {
-                    Thread.sleep(interval);
-                } catch (InterruptedException e) {
-                    break;
-                }
+                Thread.sleep(interval);
             }
+        }catch (InterruptedException e){
+            //return;
         }
     }
 }
